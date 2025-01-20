@@ -12,7 +12,7 @@ def get_company_overview(symbol):
 
         file_name = f"{symbol}_overview.json"
         with open(file_name, "w") as json_file:
-            json.dump(data, json_file, indent=4)  # Save with indentation for readability
+            json.dump(data, json_file, indent=4)  
             print(f"JSON data saved to {file_name}")
 
         return data 
