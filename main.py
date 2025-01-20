@@ -1,7 +1,7 @@
 from Corporate_Information.data_ci import get_company_overview
 
 def main():
-    symbol = "IBM"  
+    symbol = "AAPL"  
     data = get_company_overview(symbol)
     
     if data:
