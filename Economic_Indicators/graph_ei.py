@@ -1,4 +1,3 @@
-from data_ei import *
 import matplotlib.pyplot as plt
 
 EXIT_OK = 0
@@ -42,6 +41,3 @@ def plot_real_gdp(data: dict):
     else:
         print("Error: mismatch between dates and real GDP data.")
         return EXIT_FAIL
-    
-raw = get_real_gdp()
-plot_real_gdp(raw)
