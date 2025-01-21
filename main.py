@@ -1,5 +1,6 @@
 from Corporate_Information.data_ci import get_company_overview
 from Economic_Indicators.data_ei import *
+from Economic_Indicators.graph_ei import *
 
 def main():
     symbol = "AAPL"  

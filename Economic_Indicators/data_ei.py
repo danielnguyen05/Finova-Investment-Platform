@@ -4,7 +4,7 @@ API_KEY_2 = "DEMO" # 6Z27NWGRHMUYEX31 for when we wanna do it fr
 SUCCESS = 200
 GDP_FNAME = "Real_GDP.json"
 
-def get_real_gdp(interval: str) -> json:
+def get_real_gdp(interval: str) -> dict:
     '''
     Grabs the real GDP from the API.
 
@@ -12,7 +12,7 @@ def get_real_gdp(interval: str) -> json:
     Interval: quarterly/annual.
 
     Output:
-    json file containing all relevant information.
+    dict containing all relevant information.
     '''
     url = f'https://www.alphavantage.co/query?function=REAL_GDP&interval={interval}&apikey={API_KEY_2}'
     response = requests.get(url)
