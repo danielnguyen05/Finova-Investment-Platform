@@ -1,10 +1,10 @@
 import requests, json
 
-API_KEY_2 = "DEMO" # 6Z27NWGRHMUYEX31 for when we wanna do it fr
+API_KEY_2 = "demo" # 6Z27NWGRHMUYEX31 for when we wanna do it fr
 SUCCESS = 200
 GDP_FNAME = "Real_GDP.json"
 
-def get_real_gdp(interval: str) -> dict:
+def get_real_gdp(interval: str="annual") -> dict:
     '''
     Grabs the real GDP from the API.
 
