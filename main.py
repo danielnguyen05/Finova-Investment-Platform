@@ -11,6 +11,6 @@ def main():
         print(f"Sector: {data.get('Sector')}")
         print(f"Market Capitalisation: {data.get('MarketCapitalization')}")
         print(f"Description: {data.get('Description')}")
-
+        
 if __name__ == "__main__":
     main()
