@@ -1,4 +1,5 @@
-from Corporate_Information.data_ci import get_company_overview, get_dividends
+from Corporate_Information.data_ci import *
+from Corporate_Information.graph_ci import *
 from Economic_Indicators.data_ei import *
 from Economic_Indicators.graph_ei import *
 
@@ -44,7 +45,11 @@ def main():
 
     # if sample_test_data:
     #     plot_real_gdp(sample_test_data)
-        
+    
+    sample_test_data = plot_dividend_trends(dividends, symbol)
+    
+    if sample_test_data:
+        plot_dividend_trends(sample_test_data, symbol)
 
 if __name__ == "__main__":
     main()
