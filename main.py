@@ -11,6 +11,12 @@ def main():
         print(f"Sector: {data.get('Sector')}")
         print(f"Market Capitalisation: {data.get('MarketCapitalization')}")
         print(f"Description: {data.get('Description')}")
-        
+    
+    # Example execution
+    sample_test_data = get_real_gdp()
+
+    if sample_test_data:
+        plot_real_gdp(sample_test_data)
+
 if __name__ == "__main__":
     main()
