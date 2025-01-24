@@ -4,7 +4,7 @@ from Economic_Indicators.data_ei import *
 from Economic_Indicators.graph_ei import *
 
 def main():
-    symbol = "AAPL"  
+    symbol = "IBM"  
 
     data = get_company_overview(symbol)
     dividends = get_dividends(symbol)
