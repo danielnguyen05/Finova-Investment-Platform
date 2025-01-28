@@ -1,4 +1,4 @@
-import requests, json
+import requests
 
 API_KEY_2 = "demo" # 6Z27NWGRHMUYEX31 for when we wanna do it fr
 SUCCESS = 200
@@ -20,37 +20,29 @@ def get_real_gdp(interval: str="annual") -> dict:
 
     if response.status_code == SUCCESS:
         gdp_data = response.json()
-
-        with open(GDP_FNAME, "w") as json_file:
-            json.dump(gdp_data, json_file, indent=INDENT)  
-            print(f"JSON data saved to {GDP_FNAME}")
-
         return gdp_data 
-    
     else:
         print(f"Error: {response.status_code} - {response.reason}")
         return None
 
 #TODO:  Oi remember to the Real_GDP_Per_Capita one ye
 
-def get_ETF_data(symbol: str="QQQ") -> dict:
+def get_treasury_yield() -> float:
     '''
-    Extracts ETF data from the API.
+    Gets the yield to maturity (YTM), assuming monthly interval and 30-year maturity.
 
     Input:
-    symbol: the ticker for the ETF
+    None
 
     Output:
-    dict containing all relevant information.
+    YTM, as a decimal.
     '''
-    url = f'https://www.alphavantage.co/query?function=ETF_PROFILE&symbol={symbol}&apikey={API_KEY_2}'
+    url = "https://www.alphavantage.co/query?function=TREASURY_YIELD&interval=monthly&maturity=30year&apikey={API_KEY_2}"
     response = requests.get(url)
 
     if response.status_code == SUCCESS:
-        etf_data = response.json()
-
-        with open(f"{symbol}_Information", "w") as json_file:
-            json.dump(etf_data, json_file, indent=INDENT)  
-            print(f"JSON data saved to {symbol}_Information")
-
-        return etf_data
+        treasury_data = response.json()
+        return float(treasury_data["data"][0]["value"]) / 100
+    else:
+        print(f"Error: {response.status_code} - {response.reason}")
+        return None
