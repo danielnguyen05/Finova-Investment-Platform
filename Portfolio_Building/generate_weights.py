@@ -1,4 +1,10 @@
 import pulp, json
+import sys
+import os
+
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(parent_dir)
+
 from Corporate_Information.data_ci import *
 from Economic_Indicators.data_ei import *
 
@@ -24,12 +30,12 @@ def calculate_company_ror(company_ticker: str) -> tuple[float, float]:
     try:
         with open(f"{company_ticker}_overview.json", "r") as fp:
             data = json.load(fp)
-            beta = data["Beta"]
+            beta = float(data["Beta"])
     
     # Create new instance of relevant information from API
     except:
         overview = get_company_overview(company_ticker)
-        beta = overview["Beta"]
+        beta = float(overview["Beta"])
 
     if not beta:
         print("Failed to retrieve beta")
@@ -47,6 +53,4 @@ def calculate_company_ror(company_ticker: str) -> tuple[float, float]:
         print(f"Failed to retrieve treasury yield (risk-free rate of return)")
         return None
     
-    return tuple(rf + beta * (rm - rf), beta)
-
-print(calculate_company_ror("IBM"))
+    return (rf + beta * (rm - rf), beta)
