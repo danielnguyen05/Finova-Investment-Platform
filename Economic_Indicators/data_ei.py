@@ -1,7 +1,8 @@
 import requests, json
 
-API_KEY_2 = "demo" # 6Z27NWGRHMUYEX31 for when we wanna do it fr
+API_KEY_2 = "demo" # "T4F7GDVAADDA0L3B"  "6Z27NWGRHMUYEX31" "OBUZDCEF32FMATSX" when we do it for real
 SUCCESS = 200
+INDENT = 4
 GDP_FNAME = "Real_GDP.json"
 
 def get_real_gdp(interval: str="annual") -> dict:
@@ -19,14 +20,33 @@ def get_real_gdp(interval: str="annual") -> dict:
 
     if response.status_code == SUCCESS:
         gdp_data = response.json()
-
-        with open(GDP_FNAME, "w") as json_file:
-            json.dump(gdp_data, json_file, indent=4)  
-            print(f"JSON data saved to {GDP_FNAME}")
-
         return gdp_data 
-    
     else:
         print(f"Error: {response.status_code} - {response.reason}")
         return None
 
+#TODO:  Oi remember to the Real_GDP_Per_Capita one ye
+
+def get_treasury_yield() -> float:
+    '''
+    Gets the yield to maturity (YTM), assuming monthly interval and 30-year maturity.
+
+    Input:
+    None
+
+    Output:
+    YTM, as a decimal.
+    '''
+    url = f"https://www.alphavantage.co/query?function=TREASURY_YIELD&interval=monthly&maturity=30year&apikey={API_KEY_2}"
+    response = requests.get(url)
+
+    if response.status_code == SUCCESS:
+        treasury_data = response.json()
+        fname = "treasury_data.json"
+        with open(fname, "w") as json_file:
+            json.dump(treasury_data, json_file, indent=INDENT)  
+            print(f"Treasury yield information saved to {fname}")
+        return float(treasury_data["data"][0]["value"]) / 100
+    else:
+        print(f"Error: {response.status_code} - {response.reason}")
+        return None
