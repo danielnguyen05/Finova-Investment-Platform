@@ -25,7 +25,24 @@ def get_real_gdp(interval: str="annual") -> dict:
         print(f"Error: {response.status_code} - {response.reason}")
         return None
 
-#TODO:  Oi remember to the Real_GDP_Per_Capita one ye
+def get_real_gdp_per_capita() -> dict:
+    '''
+    Fetches the Real GDP per Capita from the API.
+
+    Input:
+    None
+
+    Output:
+    dict containing all relevant information.
+    '''
+    url = f'https://www.alphavantage.co/query?function=REAL_GDP_PER_CAPITA&apikey={API_KEY_2}'
+    response = requests.get(url)
+
+    if response.status_code == SUCCESS:
+        return response.json()  
+    else:
+        print(f"Error: {response.status_code} - {response.reason}")
+        return None
 
 def get_treasury_yield() -> float:
     '''
