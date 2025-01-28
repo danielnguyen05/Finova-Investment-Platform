@@ -1,7 +1,7 @@
 import requests
 import json
 
-API_KEY = "T4F7GDVAADDA0L3B"  
+API_KEY = "demo" # "T4F7GDVAADDA0L3B"  "6Z27NWGRHMUYEX31" "OBUZDCEF32FMATSX" when we do it for real
 INDENT = 4
 SUCCESS = 200
 
@@ -60,6 +60,10 @@ def get_ETF_portfolio_turnover(symbol: str="QQQ") -> float:
 
     if response.status_code == SUCCESS:
         etf_data = response.json()
+        fname = f"{symbol}_etf_data.json"
+        with open(fname, "w") as json_file:
+            json.dump(etf_data, json_file, indent=INDENT)  
+            print(f"ETF data saved to {fname}")
         return float(etf_data["portfolio_turnover"])
     else:
         print(f"Error: {response.status_code} - {response.reason}")

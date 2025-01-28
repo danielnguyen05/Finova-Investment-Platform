@@ -1,0 +1,4 @@
+import pulp
+from Portfolio_Building.get_variables import get_variables
+
+# Bulk of the algorithm shit goes here
