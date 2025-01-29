@@ -1,6 +1,5 @@
 import json, sys, os
 
-# Not very good practice but whatever
 parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(parent_dir)
 
@@ -77,3 +76,15 @@ def get_variables() -> list[tuple[float, float]]:
     for c_number in range(COMPANY_COUNT):
         ans.append(_calculate_company_ror(COMPANIES[c_number]))
     return ans
+
+def get_companies() -> dict[int, str]:
+    '''
+    Returns the companies selected.
+
+    Input:
+    None
+
+    Output:
+    A dict mapping the selection order number to the company ticker.
+    '''
+    return COMPANIES
