@@ -5,7 +5,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # pip install -U langchain langchain-community langchain-ollama run this in the terminal to install the required packages if it doesnt work
 
-model = OllamaLLM(model="llama3.1")
+model = OllamaLLM(model="llama3.2")
 
 memory = ChatMessageHistory()
 
