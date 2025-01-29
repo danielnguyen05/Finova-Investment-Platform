@@ -1,7 +1,7 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
-model = OllamaLLM(model="llama3.1")
+model = OllamaLLM(model="llama3.2")
 
 template = (
     "You are an AI assistant. Answer the user's question as accurately and concisely as possible.\n"
