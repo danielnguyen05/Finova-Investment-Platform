@@ -7,9 +7,9 @@ sys.path.append(parent_dir)
 from Corporate_Information.data_ci import *
 from Economic_Indicators.data_ei import *
 
-COMPANIES = {0: "AAPL", 1: "KO", 2: "PFE", 3: "BAC", 4: "WMT"} # Haha I've already cached this data so we can do it whenever
+COMPANIES = {0: "NVDA", 1: "KO", 2: "LLY", 3: "JPM", 4: "NFLX"} # Haha I've already cached this data so we can do it whenever
 COMPANY_COUNT = 5
-PROXY = "QQQ" # "QUS" for real
+PROXY = "QUS" # "QQQ" for demo
 
 def _calculate_company_ror(company_ticker: str) -> tuple[float, float]:
     '''
