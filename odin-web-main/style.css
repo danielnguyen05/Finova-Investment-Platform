@@ -1,0 +1,220 @@
+/*Elementos Base*/
+
+* {
+	font-family: "Open Sans", sans-serif;
+	font-family: "Oswald", sans-serif;
+	font-family: "PT Sans", sans-serif;
+	font-family: "Roboto", sans-serif;
+	text-decoration: none;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-size: 80px;
+
+	color: rgb(255, 255, 255);
+	text-shadow: rgb(175, 175, 175) 0px 4px 4px;
+}
+
+h2 {
+	font-size: 50px;
+	color: rgba(255, 255, 255, 0.897);
+}
+
+.main-container {
+	width: 80%;
+	margin: 0 auto;
+}
+
+/*Header*/
+
+#particles-js {
+	z-index: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.header {
+	background-image: url("./images/trading_wallpaper.jpg");
+	background-size: cover;
+	background-position: center;
+	color: rgb(214, 214, 214);
+	height: 100vh;
+	background-attachment: fixed;
+}
+
+/*Nav*/
+
+.barra-navegacion {
+	height: 50px;
+	background-color: rgba(0, 0, 0, 0.459);
+	z-index: 20;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+.contenedor-nav {
+	display: flex;
+	gap: 15px;
+}
+
+.izquierda {
+	margin-right: auto;
+}
+
+.header-logo {
+	font-weight: 900;
+	font-size: 40px;
+	margin-top: 0;
+}
+.nav-boton:hover {
+	color: rgb(248, 92, 1);
+	font-size: 1.2rem;
+	transition: 0.3s;
+	text-shadow: rgba(218, 165, 32, 0.568) 0px 2px 4px;
+}
+
+.animate__animated.animate__pulse {
+	--animate-duration: 2s;
+	animation-iteration-count: infinite;
+}
+
+li {
+	margin-top: 14px;
+	transition: 0.3s;
+	margin-right: 15px;
+	z-index: 1;
+	font-weight: 500;
+}
+
+li:last-of-type {
+	margin-right: 0px;
+}
+
+/*Hero*/
+.contenedor-header {
+	display: flex;
+}
+
+.contenedor-parrafo {
+	max-width: 80%;
+}
+
+.seccion-izquierda {
+	margin-top: 160px;
+}
+
+.imagen-hero {
+	z-index: 4;
+	margin-top: 230px;
+}
+
+.boton-play {
+	padding: 1.3rem;
+	background-color: rgb(248, 92, 1);
+	color: white;
+	border-radius: 1rem;
+	z-index: 15;
+	margin-top: 70px;
+	font-size: large;
+	font-weight: bold;
+	transition: 2s;
+	border: 0;
+}
+
+.boton-play:hover {
+	color: rgb(65, 65, 65);
+	background-color: rgb(255, 187, 0);
+	transition: 2s;
+}
+
+p {
+	font-size: 1.2rem;
+}
+
+/*seccion*/
+
+.contenedor-seccion {
+	margin-top: 25vh;
+	text-align: center;
+}
+
+.contenedor-elementos-seccion {
+	display: flex;
+	justify-content: space-between;
+	gap: 40px;
+}
+
+.imagen img {
+	width: auto;
+	height: 300px;
+
+	margin-top: 60px;
+}
+
+.elemento-seccion {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	text-align: left;
+}
+
+/*Quote*/
+
+.contenedor-quote {
+	margin-top: 40px;
+	height: 300px;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.459);
+	padding-top: 20px;
+}
+
+blockquote i {
+	font-size: 20px;
+	display: block;
+	margin-top: 50px;
+	text-align: justify;
+}
+
+.margin-izq {
+	display: block;
+	text-align: right;
+}
+
+/*Subscripcion*/
+
+.espacio-subscribirse {
+	width: 100%;
+	height: 300px;
+}
+
+.caja-subscripcion {
+	padding: 40px;
+	margin: 100px auto 0 auto;
+	height: 200px;
+	width: 80%;
+	background-color: rgba(0, 0, 0, 0.459);
+	border: rgba(255, 255, 255, 0.322) solid 1px;
+	border-radius: 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.boton-subscripcion button {
+	margin: 0;
+}
+
+.contenedor-footer p {
+	width: 100%;
+	height: 50px;
+	background-color: rgba(0, 0, 0, 0.459);
+	font-weight: 100;
+	font-size: 15px;
+	display: block;
+	text-align: right;
+	padding: 18px;
+}
