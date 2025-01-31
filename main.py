@@ -2,6 +2,8 @@ from Corporate_Information.data_ci import *
 from Corporate_Information.graph_ci import *
 from Economic_Indicators.data_ei import *
 from Economic_Indicators.graph_ei import *
+from Portfolio_Building.get_weights import get_weights_given_aggressiveness
+from Portfolio_Building.plot_ror import plot_value_given_aggro_and_principal
 
 def main():
     symbol = "IBM"  
@@ -50,6 +52,10 @@ def main():
     
     if sample_test_data:
         plot_dividend_trends(sample_test_data, symbol)
+    
+    # Sample Execution:
+    # print(get_weights_given_aggressiveness("conservative")) # conservative, moderately conservative, moderately aggressive, aggressive
+    # plot_value_given_aggro_and_principal("conservative", 500) # saved as a .png file
 
 if __name__ == "__main__":
     main()
