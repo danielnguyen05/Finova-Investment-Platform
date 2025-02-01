@@ -230,3 +230,50 @@ blockquote i {
 	text-align: right;
 	padding: 18px;
 }
+
+/* ✅ Default: Keep Desktop Layout */
+.contenedor-header,
+.contenedor-elementos-seccion {
+    display: flex;
+    flex-direction: row; /* Desktop: Keep horizontal */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ✅ On Mobile: Switch to Vertical Layout */
+@media screen and (max-width: 1024px) {
+    .contenedor-header,
+    .contenedor-elementos-seccion {
+        flex-direction: column; /* Mobile: Stack elements */
+        align-items: center;
+        text-align: center;
+    }
+
+    .contenedor-parrafo {
+        max-width: 100%; /* Allows text to be more readable on mobile */
+    }
+
+    .imagen-hero {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .contenedor-nav {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    /* Ensure buttons and text are centered */
+    .boton-play {
+        margin: 20px auto;
+        display: block;
+    }
+
+    /* Prevents horizontal scrolling on mobile */
+    html, body {
+        overflow-x: hidden;
+    }
+}
