@@ -52,8 +52,8 @@ def main():
     # plot_dividends_overlay(symbol)
     
     # Sample Execution:
-    # print(get_weights_given_aggressiveness("conservative")) # conservative, moderately conservative, moderately aggressive, aggressive
-    # plot_value_given_aggro_and_principal("conservative", 500) # saved as a .png file
+    print(get_weights_given_aggressiveness("conservative")) # conservative, moderately conservative, moderately aggressive, aggressive
+    plot_value_given_aggro_and_principal("conservative", 500) # saved as a .png file
 
 if __name__ == "__main__":
     main()
