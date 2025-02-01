@@ -22,7 +22,6 @@ def get_dividends(symbol):
         with open(file_path, "w") as json_file:
             json.dump(data, json_file, indent=INDENT)
             print(f"Dividend data saved to {file_name}")
-
         return data
     else:
         print(f"Error: {response.status_code} - {response.reason}")

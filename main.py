@@ -48,10 +48,8 @@ def main():
     # if sample_test_data:
     #     plot_real_gdp(sample_test_data)
     
-    sample_test_data = plot_dividend_trends(dividends, symbol)
-    
-    if sample_test_data:
-        plot_dividend_trends(sample_test_data, symbol)
+    # Sample execution
+    # plot_dividends_overlay(symbol)
     
     # Sample Execution:
     # print(get_weights_given_aggressiveness("conservative")) # conservative, moderately conservative, moderately aggressive, aggressive

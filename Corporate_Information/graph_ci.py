@@ -31,7 +31,6 @@ def plot_dividends_overlay(companies: list[str]):
 
     for company_number in range(num_companies):
         try:
-
             dividend_file_path = os.path.join(parent_dir, 'Dividend_Data', f"{companies[company_number]}_dividends.json")
             with open(dividend_file_path, 'r') as fp:
                 dividend_data = json.load(fp)
@@ -41,6 +40,7 @@ def plot_dividends_overlay(companies: list[str]):
         if "data" not in dividend_data:
             print("Invalid or missing dividend data.")
             plt.close()
+            os.remove(dividend_file_path)
             return EXIT_FAIL
         
         dividend_data = dividend_data["data"]
