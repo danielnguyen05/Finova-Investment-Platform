@@ -20,16 +20,10 @@
 	</head>
 	<body class="header">
 		<header>
-			<video id="background-video" autoplay loop muted>
+			<video autoplay loop muted playsinline id="background-video">
 				<source src="./videos/background.mp4" type="video/mp4">
-			</video>
-			
-			<script>
-				document.addEventListener("DOMContentLoaded", function () {
-					let video = document.getElementById("background-video");
-					video.playbackRate = 0.7;
-				});
-			</script>
+				Your browser does not support the video tag.
+			  </video>
 			  <div id="particles-js"></div>
 
 			<nav>
