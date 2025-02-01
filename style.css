@@ -11,6 +11,10 @@
 	padding: 0;
 }
 
+h3, p, span, li, blockquote {
+    color: rgb(215, 215, 215); 
+}
+
 h1 {
 	font-size: 80px;
 
@@ -37,13 +41,14 @@ h2 {
 	height: 100%;
 }
 
-.header {
-	background-image: url("./images/trading_wallpaper.jpg");
-	background-size: cover;
-	background-position: center;
-	color: rgb(214, 214, 214);
-	height: 100vh;
-	background-attachment: fixed;
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
 }
 
 /*Nav*/
@@ -69,13 +74,20 @@ h2 {
 	font-weight: 900;
 	font-size: 40px;
 	margin-top: 0;
+	color: rgb(215, 215, 215);
 }
+
 .nav-boton:hover {
 	color: rgb(248, 92, 1);
 	font-size: 1.2rem;
 	transition: 0.3s;
 	text-shadow: rgba(218, 165, 32, 0.568) 0px 2px 4px;
 }
+
+.nav-boton {
+    color: white; /* Forces text color to white */
+}
+
 
 .animate__animated.animate__pulse {
 	--animate-duration: 2s;
