@@ -2,3 +2,4 @@ langchain
 langchain_ollama
 streamlit
 python-dotenv
+pulp
