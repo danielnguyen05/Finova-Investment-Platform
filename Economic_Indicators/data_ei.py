@@ -1,9 +1,10 @@
-import requests, json
+import requests, json, os
 
 API_KEY_2 = "demo" # "T4F7GDVAADDA0L3B"  "6Z27NWGRHMUYEX31" "OBUZDCEF32FMATSX" when we do it for real
 SUCCESS = 200
 INDENT = 4
 GDP_FNAME = "Real_GDP.json"
+TREASURY_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'Treasury_Data')
 
 def get_real_gdp(interval: str="annual") -> dict:
     '''
@@ -60,7 +61,8 @@ def get_treasury_yield() -> float:
     if response.status_code == SUCCESS:
         treasury_data = response.json()
         fname = "treasury_data.json"
-        with open(fname, "w") as json_file:
+        file_path = os.path.join(TREASURY_DIRECTORY, fname)
+        with open(file_path, "w") as json_file:
             json.dump(treasury_data, json_file, indent=INDENT)  
             print(f"Treasury yield information saved to {fname}")
         return float(treasury_data["data"][0]["value"]) / 100

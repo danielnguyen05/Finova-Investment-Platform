@@ -6,9 +6,14 @@ sys.path.append(parent_dir)
 from Corporate_Information.data_ci import *
 from Economic_Indicators.data_ei import *
 
-COMPANIES = {0: "NVDA", 1: "KO", 2: "LLY", 3: "JPM", 4: "NFLX"} # Haha I've already cached this data so we can do it whenever
+COMPANIES = {0: "NVDA", 1: "KO", 2: "LLY", 3: "JPM", 4: "NFLX"}
 COMPANY_COUNT = 5
 PROXY = "QUS" # "QQQ" for demo
+TREASURY_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'Treasury_Data')
+CO_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'Company_Overviews')
+ETF_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'ETF_Data')
+EXIT_OK = 1
+EXIT_FAIL = 0
 
 def _calculate_company_ror(company_ticker: str) -> tuple[float, float]:
     '''
@@ -23,7 +28,9 @@ def _calculate_company_ror(company_ticker: str) -> tuple[float, float]:
     '''
     # Already extracted relevant information from API
     try:
-        with open(f"{company_ticker}_overview.json", "r") as fp:
+        file_name = f"{company_ticker}_overview.json"
+        file_path = os.path.join(CO_DIRECTORY, file_name)
+        with open(file_path, "r") as fp:
             data = json.load(fp)
             beta = float(data["Beta"])
     
@@ -33,11 +40,13 @@ def _calculate_company_ror(company_ticker: str) -> tuple[float, float]:
         beta = float(overview["Beta"])
 
     if not beta:
-        print("Failed to retrieve beta")
-        return None
+        print("Failed to retrieve beta.")
+        return EXIT_FAIL
     
     try:
-        with open(f"{PROXY}_etf_data.json") as fp:
+        file_name = f"{PROXY}_etf_data.json"
+        file_path = os.path.join(ETF_DIRECTORY, file_name)
+        with open(file_path) as fp:
             data = json.load(fp)
             rm = float(data["portfolio_turnover"])
     except:
@@ -47,9 +56,10 @@ def _calculate_company_ror(company_ticker: str) -> tuple[float, float]:
         print(f"Failed to retrieve data for {PROXY} (market portfolio proxy)")
         return None
     
-    # Janky ass 3 try excepts lmao
     try:
-        with open(f"treasury_data.json") as fp:
+        file_name = f"treasury_data.json"
+        file_path = os.path.join(TREASURY_DIRECTORY, file_name)
+        with open(file_path) as fp:
             data = json.load(fp)
             rf = float(data["data"][0]["value"]) / 100
     except:

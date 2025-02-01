@@ -57,4 +57,3 @@ def plot_value_given_aggro_and_principal(aggro: str, principal: float) -> None:
     '''
     _, target = get_weights_given_aggressiveness(aggro)
     _plot_value(principal, target)
-    return None
