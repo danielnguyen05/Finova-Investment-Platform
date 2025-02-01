@@ -12,7 +12,7 @@ EXIT_FAIL = 0
 
 def plot_dividends_overlay(companies: list[str]):
     '''
-    Plots the dividend trends of one more more companies on top of each other.
+    Plots the dividend trends of one or more companies on top of each other, starting from the latest start date across all companies.
 
     Input:
     companies: a list of tickers for the companies.
@@ -25,13 +25,15 @@ def plot_dividends_overlay(companies: list[str]):
     if num_companies == 0:
         print("Error - not enough companies selected.")
         return EXIT_FAIL
-    
-    plt.figure(figsize=(10, 6))
+
+    all_dividend_data = []
+    latest_start_date = datetime.min
 
     for company_number in range(num_companies):
         try:
-            fname = f"{companies[company_number]}_dividends.json"
-            with open(fname, 'r') as fp:
+
+            dividend_file_path = os.path.join(parent_dir, 'Dividend_Data', f"{companies[company_number]}_dividends.json")
+            with open(dividend_file_path, 'r') as fp:
                 dividend_data = json.load(fp)
         except:
             dividend_data = get_dividends(companies[company_number])
@@ -42,10 +44,24 @@ def plot_dividends_overlay(companies: list[str]):
             return EXIT_FAIL
         
         dividend_data = dividend_data["data"]
+        all_dividend_data.append((companies[company_number], dividend_data))
 
-        dates = [datetime.strptime(record['ex_dividend_date'], '%Y-%m-%d') for record in dividend_data]
-        amounts = [float(record['amount']) for record in dividend_data]
-        plt.plot(dates, amounts, linestyle='-', label=companies[company_number])
+        last_entry_date = datetime.strptime(dividend_data[-1]['ex_dividend_date'], '%Y-%m-%d')
+        latest_start_date = max(latest_start_date, last_entry_date)
+
+    plt.figure(figsize=(10, 6))
+
+    for company_name, dividend_data in all_dividend_data:
+
+        filtered_data = [record for record in dividend_data if datetime.strptime(record['ex_dividend_date'], '%Y-%m-%d') >= latest_start_date]
+
+        if not filtered_data:
+            print(f"No data after {latest_start_date.strftime('%Y-%m-%d')} for {company_name}.")
+            continue
+        
+        dates = [datetime.strptime(record['ex_dividend_date'], '%Y-%m-%d') for record in filtered_data]
+        amounts = [float(record['amount']) for record in filtered_data]
+        plt.plot(dates, amounts, linestyle='-', label=company_name)
 
     plt.title(f"Dividend Trends for {', '.join(companies)}")
     plt.xlabel("Ex-Dividend Date")
