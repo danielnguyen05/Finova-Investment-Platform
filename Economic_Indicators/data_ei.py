@@ -47,7 +47,7 @@ def get_real_gdp_per_capita() -> dict:
 
 def get_treasury_yield() -> float:
     '''
-    Gets the yield to maturity (YTM), assuming monthly interval and 30-year maturity.
+    Gets the yield to maturity (YTM), assuming monthly interval and 10-year maturity.
 
     Input:
     None
@@ -55,7 +55,7 @@ def get_treasury_yield() -> float:
     Output:
     YTM, as a decimal.
     '''
-    url = f"https://www.alphavantage.co/query?function=TREASURY_YIELD&interval=monthly&maturity=30year&apikey={API_KEY_2}"
+    url = f"https://www.alphavantage.co/query?function=TREASURY_YIELD&interval=monthly&maturity=10year&apikey={API_KEY_2}"
     response = requests.get(url)
 
     if response.status_code == SUCCESS:
