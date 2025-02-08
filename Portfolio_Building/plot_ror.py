@@ -20,7 +20,7 @@ def _plot_value(principal: float, rate: float) -> None:
     Displays an interactive graph with a smooth, multi-layered variance effect.
     """
     t = np.arange(0, TOTAL_YEARS + 1, 1)
-    A = principal * (1 + rate) ** t  # Compound interest formula
+    A = principal * (1 + rate) ** t  
 
     variance_levels = [
         (0.90, 1.10, 'rgba(173, 216, 230, 0.3)'),  # Inner
@@ -80,7 +80,7 @@ def _plot_value(principal: float, rate: float) -> None:
             fixedrange=True, 
             range=[0, max(A) * 1.1],
         ),
-        plot_bgcolor='rgb(51, 153, 255)',  # Light blue background
+        plot_bgcolor='rgb(51, 153, 255)', 
         paper_bgcolor='rgb(51, 153, 255)',
     )
 
