@@ -24,6 +24,20 @@ def index():
     '''
     return render_template("index.html")
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+# ✅ Route: Serve Demo Page
+@app.route("/demo")
+def demo():
+    return render_template("demo.html")
+
+# ✅ Route: Serve Contact Page
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
 # ✅ API Endpoint: Get Company Overview
 @app.route('/api/company/<symbol>', methods=['GET'])
 def get_company(symbol):
