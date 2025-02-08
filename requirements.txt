@@ -3,3 +3,9 @@ langchain_ollama
 streamlit
 python-dotenv
 pulp
+flask
+numpy
+gunicorn
+matplotlib
+pandas
+plotly
