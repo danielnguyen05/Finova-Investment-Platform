@@ -5,8 +5,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Trading Platform Project</title>
-		<link rel="stylesheet" href="normalize.css" />
-		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -21,9 +21,9 @@
 	<body class="header">
 		<header>
 			<video autoplay loop muted playsinline id="background-video">
-				<source src="./videos/background.mp4" type="video/mp4">
+				<source src="{{ url_for('static', filename='videos/background.mp4') }}" type="video/mp4">
 				Your browser does not support the video tag.
-			  </video>
+			</video>
 			  <div id="particles-js"></div>
 
 			<nav>
@@ -74,7 +74,7 @@
 
 			<div class="contenedor-elementos-seccion">
 				<div class="elemento-seccion">
-					<div class="imagen"><img src="./images/data_extraction.png" alt="" /></div>
+					<div class="imagen"><img src="{{ url_for('static', filename='images/data_extraction.png') }}" alt="" /></div>
 					<div class="contenido-seccion">
 						<p>
 							<strong>Real-Time Financial and Market Data Extraction</strong>
@@ -89,7 +89,7 @@
 					</div>
 				</div>
 				<div class="elemento-seccion">
-					<div class="imagen"><img src="./images/ai.png" alt="" /></div>
+					<div class="imagen"><img src="{{ url_for('static', filename='images/ai.png') }}" alt="" /></div>
 					<div class="contenido-seccion">
 						<p>
 							<strong>AI-Powered Market Insights & Chatbot</strong>
@@ -104,7 +104,7 @@
 					</div>
 				</div>
 				<div class="elemento-seccion">
-					<div class="imagen"><img src="./images/computer_system.png" alt="" /></div>
+					<div class="imagen"><img src="{{ url_for('static', filename='images/computer_system.png') }}" alt="" /></div>
 					<div class="contenido-seccion">
 						<p>
 							<strong>Interactive Graphs and Visualizations</strong>
@@ -118,7 +118,7 @@
 					</div>
 				</div>
 				<div class="elemento-seccion">
-					<div class="imagen"><img src="./images/trading_phone.png" alt="" /></div>
+					<div class="imagen"><img src="{{ url_for('static', filename='images/trading_phone.png') }}" alt="" /></div>
 					<div class="contenido-seccion">
 						<p>
 							<strong>Personalized Portfolio Recommendation System </strong>
@@ -158,7 +158,7 @@
 			<p>Page by <strong>Daniel Nguyen, Zenan Chen</strong></p>
 			<p>Disclaimer: responses by the chatbot are not representative of the views of the authors of this page. FINOVA is not an accredited financial institution; information provided should not be interpreted as financial advice.</p>
 		</footer>
-		<script src="./particles.js"></script>
-		<script src="./app.js"></script>
+		<script src="{{ url_for('static', filename='particles.js') }}"></script>
+		<script src="{{ url_for('static', filename='app.js') }}"></script>
 	</body>
 </html>
