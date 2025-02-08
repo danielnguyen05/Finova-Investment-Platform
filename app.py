@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import numpy as np
 
 # Import all the necessary functions from your existing modules
@@ -10,6 +10,19 @@ from Portfolio_Building.get_weights import get_weights_given_aggressiveness
 from Portfolio_Building.plot_ror import plot_value_given_aggro_and_principal
 
 app = Flask(__name__)
+
+@app.route("/")
+def index():
+    '''
+    Opens the template index.html
+
+    Inputs;
+    None
+
+    Returns:
+    output: string
+    '''
+    return render_template("index.html")
 
 # ✅ API Endpoint: Get Company Overview
 @app.route('/api/company/<symbol>', methods=['GET'])
