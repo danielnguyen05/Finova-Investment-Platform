@@ -116,5 +116,59 @@ particlesJS('particles-js',
       "background_size": "cover"
     }
   }
-
 );
+
+// Function to fetch investment data from Flask API and update the graph
+function updateGraph() {
+  // Get user input values from the form
+  const principal = parseFloat(document.getElementById("principal").value);
+  const aggro = document.getElementById("risk").value;
+
+  // Validate user input
+  if (isNaN(principal) || principal <= 0) {
+      alert("Please enter a valid principal amount.");
+      return;
+  }
+
+  // Send POST request to Flask API
+  fetch("https://finova-du4r.onrender.com/api/investment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ principal, aggro }) // Send input as JSON
+  })
+  .then(response => response.json()) // Parse JSON response
+  .then(data => {
+      // Prepare Plotly traces
+      let trace1 = {
+          x: data.t,
+          y: data.expected,
+          mode: "lines",
+          name: "Expected Growth",
+          line: { color: "white", width: 2 }
+      };
+
+      let trace2 = {
+          x: [...data.t, ...data.t.reverse()],
+          y: [...data.upper, ...data.lower.reverse()],
+          fill: "toself",
+          fillcolor: "rgba(173, 216, 230, 0.3)",
+          line: { color: "transparent" },
+          name: "Variance Range",
+          type: "scatter"
+      };
+
+      let layout = {
+          title: "Investment Growth Over Time",
+          xaxis: { title: "Years" },
+          yaxis: { title: "Investment Value ($)", type: "log" }, // Log scale to manage exponential growth
+          plot_bgcolor: "rgb(51, 153, 255)",
+          paper_bgcolor: "rgb(51, 153, 255)",
+          font: { color: "white" }
+      };
+
+      // Render the graph in the "graph" div
+      Plotly.newPlot("graph", [trace2, trace1], layout);
+  })
+  .catch(error => console.error("Error fetching investment data:", error));
+}
+
