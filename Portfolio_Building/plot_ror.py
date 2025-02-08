@@ -97,5 +97,6 @@ def plot_value_given_aggro_and_principal(aggro: str, principal: float) -> None:
     Output:
     Displays an interactive graph using Plotly.
     '''
-    _, target = get_weights_given_aggressiveness(aggro)
+    _, target_bounds = get_weights_given_aggressiveness(aggro)
+    target = target_bounds[1]
     _plot_value(principal, target)
