@@ -3,29 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment Growth Calculator</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Import Plotly -->
-    <script src="app.js" defer></script> <!-- Link to JavaScript file -->
-    <link rel="stylesheet" href="style.css"> <!-- CSS file -->
+    <title>Investment & Economic Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="app.js" defer></script> <!-- JavaScript to Fetch Data -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <h1>Investment Growth Calculator</h1>
+    <h1>Investment & Economic Dashboard</h1>
 
-    <label for="principal">Initial Investment ($):</label>
-    <input type="number" id="principal" value="500">
+    <!-- Investment Growth Calculator -->
+    <section>
+        <h2>Investment Growth Calculator</h2>
+        <label for="principal">Initial Investment ($):</label>
+        <input type="number" id="principal" value="500">
+        
+        <label for="risk">Risk Level:</label>
+        <select id="risk">
+            <option value="conservative">Conservative</option>
+            <option value="moderate">Moderate</option>
+            <option value="aggressive">Aggressive</option>
+        </select>
 
-    <label for="risk">Risk Level:</label>
-    <select id="risk">
-        <option value="conservative">Conservative</option>
-        <option value="moderate">Moderate</option>
-        <option value="aggressive">Aggressive</option>
-    </select>
+        <button onclick="updateInvestmentGraph()">Calculate Growth</button>
+        <div id="investmentGraph"></div>
+    </section>
 
-    <button onclick="updateGraph()">Calculate Growth</button>
+    <!-- Economic Indicators -->
+    <section>
+        <h2>Economic Indicators</h2>
+        <button onclick="updateGDPGraph()">Get Real GDP Data</button>
+        <div id="gdpGraph"></div>
 
-    <!-- Graph container -->
-    <div id="graph"></div>
+        <button onclick="updateGDPPerCapitaGraph()">Get GDP per Capita Data</button>
+        <div id="gdpPerCapitaGraph"></div>
+    </section>
+
+    <!-- Company Dividend Trends -->
+    <section>
+        <h2>Company Dividend Trends</h2>
+        <label for="company">Company Ticker:</label>
+        <input type="text" id="company" placeholder="e.g. IBM">
+        <button onclick="updateDividendsGraph()">Fetch Dividend Data</button>
+        <div id="dividendsGraph"></div>
+    </section>
+
+    <!-- Company Overview -->
+    <section>
+        <h2>Company Overview & Dividends</h2>
+        <div id="companyOverview"></div>
+    </section>
 
 </body>
 </html>

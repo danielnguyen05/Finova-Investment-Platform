@@ -118,57 +118,87 @@ particlesJS('particles-js',
   }
 );
 
-// Function to fetch investment data from Flask API and update the graph
-function updateGraph() {
-  // Get user input values from the form
-  const principal = parseFloat(document.getElementById("principal").value);
-  const aggro = document.getElementById("risk").value;
+const API_BASE = "https://finova-du4r.onrender.com/api";
 
-  // Validate user input
-  if (isNaN(principal) || principal <= 0) {
-      alert("Please enter a valid principal amount.");
-      return;
-  }
+// 📌 Fetch Investment Data
+function updateInvestmentGraph() {
+    const principal = parseFloat(document.getElementById("principal").value);
+    const aggro = document.getElementById("risk").value;
 
-  // Send POST request to Flask API
-  fetch("https://finova-du4r.onrender.com/api/investment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ principal, aggro }) // Send input as JSON
-  })
-  .then(response => response.json()) // Parse JSON response
-  .then(data => {
-      // Prepare Plotly traces
-      let trace1 = {
-          x: data.t,
-          y: data.expected,
-          mode: "lines",
-          name: "Expected Growth",
-          line: { color: "white", width: 2 }
-      };
+    if (isNaN(principal) || principal <= 0) {
+        alert("Please enter a valid principal amount.");
+        return;
+    }
 
-      let trace2 = {
-          x: [...data.t, ...data.t.reverse()],
-          y: [...data.upper, ...data.lower.reverse()],
-          fill: "toself",
-          fillcolor: "rgba(173, 216, 230, 0.3)",
-          line: { color: "transparent" },
-          name: "Variance Range",
-          type: "scatter"
-      };
-
-      let layout = {
-          title: "Investment Growth Over Time",
-          xaxis: { title: "Years" },
-          yaxis: { title: "Investment Value ($)", type: "log" }, // Log scale to manage exponential growth
-          plot_bgcolor: "rgb(51, 153, 255)",
-          paper_bgcolor: "rgb(51, 153, 255)",
-          font: { color: "white" }
-      };
-
-      // Render the graph in the "graph" div
-      Plotly.newPlot("graph", [trace2, trace1], layout);
-  })
-  .catch(error => console.error("Error fetching investment data:", error));
+    fetch(`${API_BASE}/investment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ principal, aggro })
+    })
+    .then(response => response.json())
+    .then(data => {
+        let trace1 = { x: data.t, y: data.expected, mode: "lines", name: "Expected Growth", line: { color: "white", width: 2 }};
+        let trace2 = { x: [...data.t, ...data.t.reverse()], y: [...data.upper, ...data.lower.reverse()], fill: "toself", fillcolor: "rgba(173, 216, 230, 0.3)", line: { color: "transparent" }, name: "Variance Range", type: "scatter" };
+        let layout = { title: "Investment Growth Over Time", xaxis: { title: "Years" }, yaxis: { title: "Investment Value ($)" }, plot_bgcolor: "rgb(51, 153, 255)", paper_bgcolor: "rgb(51, 153, 255)", font: { color: "white" } };
+        Plotly.newPlot("investmentGraph", [trace2, trace1], layout);
+    })
+    .catch(error => console.error("Error fetching investment data:", error));
 }
 
+// 📌 Fetch Real GDP Data
+function updateGDPGraph() {
+    fetch(`${API_BASE}/economic`)
+    .then(response => response.json())
+    .then(data => {
+        let trace = { x: data.dates, y: data.values, mode: "lines", name: "Real GDP", line: { color: "blue", width: 2 }};
+        let layout = { title: "Real GDP Over Time", xaxis: { title: "Years" }, yaxis: { title: "Real GDP ($)" } };
+        Plotly.newPlot("gdpGraph", [trace], layout);
+    })
+    .catch(error => console.error("Error fetching GDP data:", error));
+}
+
+// 📌 Fetch Real GDP Per Capita
+function updateGDPPerCapitaGraph() {
+    fetch(`${API_BASE}/economic/percapita`)
+    .then(response => response.json())
+    .then(data => {
+        let trace = { x: data.dates, y: data.values, mode: "lines", name: "Real GDP Per Capita", line: { color: "green", width: 2 }};
+        let layout = { title: "Real GDP Per Capita Over Time", xaxis: { title: "Years" }, yaxis: { title: "GDP Per Capita ($)" } };
+        Plotly.newPlot("gdpPerCapitaGraph", [trace], layout);
+    })
+    .catch(error => console.error("Error fetching GDP Per Capita data:", error));
+}
+
+// 📌 Fetch Company Dividend Trends
+function updateDividendsGraph() {
+    const company = document.getElementById("company").value.toUpperCase();
+    if (!company) {
+        alert("Please enter a valid company ticker.");
+        return;
+    }
+
+    fetch(`${API_BASE}/dividends/${company}`)
+    .then(response => response.json())
+    .then(data => {
+        let trace = { x: data.dates, y: data.dividends, mode: "lines+markers", name: `Dividends for ${company}`, line: { color: "purple", width: 2 }};
+        let layout = { title: `Dividend Trends for ${company}`, xaxis: { title: "Years" }, yaxis: { title: "Dividend Amount ($)" } };
+        Plotly.newPlot("dividendsGraph", [trace], layout);
+    })
+    .catch(error => console.error("Error fetching dividend data:", error));
+}
+
+// 📌 Fetch Company Overview
+function fetchCompanyOverview(company) {
+    fetch(`${API_BASE}/company/${company}`)
+    .then(response => response.json())
+    .then(data => {
+        let output = `
+            <h3>${data.Name} (${data.Symbol})</h3>
+            <p><strong>Sector:</strong> ${data.Sector}</p>
+            <p><strong>Market Capitalization:</strong> ${data.MarketCapitalization}</p>
+            <p><strong>Description:</strong> ${data.Description}</p>
+        `;
+        document.getElementById("companyOverview").innerHTML = output;
+    })
+    .catch(error => console.error("Error fetching company overview:", error));
+}
