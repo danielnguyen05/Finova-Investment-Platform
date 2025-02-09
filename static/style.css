@@ -363,3 +363,54 @@ blockquote i {
     }
 }
 
+/* Autocomplete Search Bar */
+.search-container {
+    position: relative;
+    width: 300px;
+    margin: auto;
+}
+
+#companySearch {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    background-color: white;
+    color: black;
+}
+
+.autocomplete-list {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    border-radius: 5px;
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    background-color: white;
+    color: black;
+}
+
+.autocomplete-item:hover {
+    background: #f0f0f0;
+}
+
+/* Disable 'Enter' key */
+#companySearch:focus {
+    outline: none;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

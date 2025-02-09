@@ -3,37 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Data Dashboard</title>
+    <title>Financial Data Search</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
         }
-        .graph-container {
-            width: 80%;
+        .search-container {
+            position: relative;
+            width: 300px;
             margin: auto;
         }
-        img {
-            max-width: 100%;
-            height: auto;
+        #companySearch {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        .autocomplete-list {
+            position: absolute;
+            width: 100%;
+            background: white;
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            border-radius: 5px;
+            display: none;
+        }
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        .autocomplete-item:hover {
+            background: #f0f0f0;
         }
     </style>
 </head>
 <body>
 
-    <h1>Financial Data Dashboard</h1>
+    <h1>Financial Data Search</h1>
 
-    <!-- Company Selection -->
-    <label for="company">Select a Company:</label>
-    <select id="company">
-        <option value="IBM">IBM</option>
-        <option value="AAPL">Apple</option>
-        <option value="NVDA">NVIDIA</option>
-        <option value="TSLA">Tesla</option>
-        <option value="JPM">JPMorgan Chase</option>
-    </select>
-    <button onclick="fetchGraphs()">Get Data</button>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" id="companySearch" placeholder="Search for a company..." autocomplete="off">
+        <div id="autocompleteResults" class="autocomplete-list"></div>
+    </div>
+
+    <button id="fetchDataBtn" disabled>Get Data</button>
 
     <hr>
 
@@ -47,9 +68,85 @@
     <img id="gdpPerCapitaGraph" src="/static/real_gdp_per_capita_plot.png" alt="Real GDP Per Capita Graph">
 
     <script>
-        function fetchGraphs() {
-            const company = document.getElementById("company").value;
-    
+        let companies = [];
+        const searchInput = document.getElementById("companySearch");
+        const resultsContainer = document.getElementById("autocompleteResults");
+        const fetchButton = document.getElementById("fetchDataBtn");
+
+        // ✅ Load JSON file
+        async function loadCompanies() {
+            try {
+                const response = await fetch("/static/companies.json");
+                companies = await response.json();
+                console.log("✅ Companies Loaded:", companies.length, "companies");
+            } catch (error) {
+                console.error("❌ Failed to load companies.json", error);
+            }
+        }
+
+        // ✅ FIXED: Ensure null values don’t break the search
+        function updateAutocomplete() {
+            console.log("🔍 Running updateAutocomplete...");
+
+            if (companies.length === 0) {
+                console.error("❌ Companies data not loaded yet!");
+                return;
+            }
+
+            const searchValue = searchInput.value.toLowerCase();
+            resultsContainer.innerHTML = "";
+
+            if (!searchValue) {
+                resultsContainer.style.display = "none";
+                return;
+            }
+
+            // ✅ Fix: Skip companies with missing "name" or "symbol" before calling .toLowerCase()
+            const filtered = companies.filter(company =>
+                company.name && company.symbol &&  // Ensure both exist
+                (company.name.toLowerCase().includes(searchValue) || 
+                company.symbol.toLowerCase().includes(searchValue))
+            );
+
+            console.log("🔎 Filtered Results:", filtered.length);
+
+            if (filtered.length === 0) {
+                resultsContainer.style.display = "none";
+                return;
+            }
+
+            // ✅ Populate dropdown
+            filtered.slice(0, 10).forEach(company => {
+                const div = document.createElement("div");
+                div.classList.add("autocomplete-item");
+                div.textContent = `${company.name} (${company.symbol})`;
+                div.onclick = () => selectCompany(company.symbol);
+                resultsContainer.appendChild(div);
+            });
+
+            resultsContainer.style.display = "block";
+        }
+
+        // ✅ Select company
+        function selectCompany(symbol) {
+            searchInput.value = symbol;
+            resultsContainer.style.display = "none";
+            fetchButton.disabled = false;
+            console.log("✅ Selected:", symbol);
+        }
+
+        // ✅ Fetch data from API and update graphs
+        async function fetchGraphs() {
+            const company = searchInput.value.trim();
+            if (!company) {
+                console.error("❌ No company selected!");
+                return;
+            }
+
+            console.log("📡 Sending request to /api/graphs for:", company);
+
+            fetchButton.disabled = true;  // Prevent spam clicking
+
             fetch("/api/graphs", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -57,16 +154,47 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log("API Response:", data);
+                console.log("✅ API Response:", data);
 
-                // Update images with cache-busting timestamps
-                document.getElementById("dividendsGraph").src = data.dividends_url;
-                document.getElementById("gdpGraph").src = data.gdp_url;
-                document.getElementById("gdpPerCapitaGraph").src = data.gdp_per_capita_url;
+                if (data.error) {
+                    console.error("❌ Error from API:", data.error);
+                    return;
+                }
+
+                // ✅ Update images dynamically
+                document.getElementById("dividendsGraph").src = data.dividends_url + "?" + new Date().getTime();
+                document.getElementById("gdpGraph").src = data.gdp_url + "?" + new Date().getTime();
+                document.getElementById("gdpPerCapitaGraph").src = data.gdp_per_capita_url + "?" + new Date().getTime();
+
+                fetchButton.disabled = false;
             })
-            .catch(error => console.error("Error fetching graphs:", error));
+            .catch(error => {
+                console.error("❌ Error calling /api/graphs:", error);
+                fetchButton.disabled = false;
+            });
         }
-    </script>
 
+        // ✅ Attach event listeners
+        searchInput.addEventListener("input", updateAutocomplete);
+        searchInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+            }
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!searchInput.contains(event.target) && !resultsContainer.contains(event.target)) {
+                resultsContainer.style.display = "none";
+            }
+        });
+
+        // ✅ Attach event listener to button
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("✅ Attaching fetchGraphs() to button...");
+            fetchButton.addEventListener("click", fetchGraphs);
+            loadCompanies();
+        });
+
+    </script>
 </body>
 </html>
