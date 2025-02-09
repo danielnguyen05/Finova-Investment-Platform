@@ -3,57 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment & Economic Dashboard</title>
+    <title>Financial Data Dashboard</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="app.js" defer></script> <!-- JavaScript to Fetch Data -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .graph-container {
+            width: 80%;
+            margin: auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Investment & Economic Dashboard</h1>
+    <h1>Financial Data Dashboard</h1>
 
-    <!-- Investment Growth Calculator -->
-    <section>
-        <h2>Investment Growth Calculator</h2>
-        <label for="principal">Initial Investment ($):</label>
-        <input type="number" id="principal" value="500">
-        
-        <label for="risk">Risk Level:</label>
-        <select id="risk">
-            <option value="conservative">Conservative</option>
-            <option value="moderate">Moderate</option>
-            <option value="aggressive">Aggressive</option>
-        </select>
+    <!-- Company Selection -->
+    <label for="company">Select a Company:</label>
+    <select id="company">
+        <option value="IBM">IBM</option>
+        <option value="AAPL">Apple</option>
+        <option value="NVDA">NVIDIA</option>
+        <option value="TSLA">Tesla</option>
+        <option value="JPM">JPMorgan Chase</option>
+    </select>
+    <button onclick="fetchGraphs()">Get Data</button>
 
-        <button onclick="updateInvestmentGraph()">Calculate Growth</button>
-        <div id="investmentGraph"></div>
-    </section>
-
-    <!-- Economic Indicators -->
-    <section>
-        <h2>Economic Indicators</h2>
-        <button onclick="updateGDPGraph()">Get Real GDP Data</button>
-        <div id="gdpGraph"></div>
-
-        <button onclick="updateGDPPerCapitaGraph()">Get GDP per Capita Data</button>
-        <div id="gdpPerCapitaGraph"></div>
-    </section>
+    <hr>
 
     <!-- Company Dividend Trends -->
-    <section>
-        <h2>Company Dividend Trends</h2>
-        <label for="company">Company Ticker:</label>
-        <input type="text" id="company" placeholder="e.g. IBM">
-        <button onclick="updateDividendsGraph()">Fetch Dividend Data</button>
-        <div id="dividendsGraph"></div>
-    </section>
+    <h2>Company Dividend Trends</h2>
+    <img id="dividendsGraph" src="" alt="Company Dividend Trends Graph">
 
-    <!-- Company Overview -->
-    <section>
-        <h2>Company Overview & Dividends</h2>
-        <div id="companyOverview"></div>
-    </section>
+    <!-- Real GDP -->
+    <h2>Real GDP Over Time</h2>
+    <img id="gdpGraph" src="" alt="Real GDP Graph">
+
+    <!-- Real GDP Per Capita -->
+    <h2>Real GDP Per Capita Over Time</h2>
+    <img id="gdpPerCapitaGraph" src="" alt="Real GDP Per Capita Graph">
+
+    <script>
+        function fetchGraphs() {
+            const company = document.getElementById("company").value;
+
+            console.log("Fetching data for:", company);
+
+            fetch("https://finova-du4r.onrender.com/api/graphs", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ company })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("API Response:", data);
+
+                // Update images dynamically
+                document.getElementById("dividendsGraph").src = "company_dividends_plot.png?" + new Date().getTime();
+                document.getElementById("gdpGraph").src = "real_gdp_plot.png?" + new Date().getTime();
+                document.getElementById("gdpPerCapitaGraph").src = "real_gdp_per_capita_plot.png?" + new Date().getTime();
+            })
+            .catch(error => console.error("Error fetching graphs:", error));
+        }
+    </script>
 
 </body>
 </html>

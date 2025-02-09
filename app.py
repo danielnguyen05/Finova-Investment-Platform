@@ -8,6 +8,9 @@ from Economic_Indicators.data_ei import get_real_gdp
 from Economic_Indicators.graph_ei import plot_real_gdp
 from Portfolio_Building.get_weights import get_weights_given_aggressiveness
 from Portfolio_Building.plot_ror import plot_value_given_aggro_and_principal
+from Corporate_Information.graph_ci import plot_dividends_overlay
+from Economic_Indicators.graph_ei import plot_real_gdp, plot_real_gdp_per_capita
+from Economic_Indicators.data_ei import get_real_gdp, get_real_gdp_per_capita
 
 app = Flask(__name__)
 
@@ -112,6 +115,26 @@ def generate_dividend_plot(symbol):
     """Creates and saves a dividend overlay plot."""
     plot_dividends_overlay(symbol)
     return jsonify({"message": f"Dividend overlay plot for {symbol} saved."})
+
+
+@app.route("/api/graphs", methods=["POST"])
+def generate_graphs():
+    data = request.json
+    company = data.get("company")
+
+    if not company:
+        return jsonify({"error": "Company not provided"}), 400
+
+    # Generate graphs based on user selection
+    plot_dividends_overlay([company])  # Generates company_dividends_plot.png
+
+    # Fetch economic data and generate graphs
+    real_gdp_data = get_real_gdp()
+    real_gdp_per_capita_data = get_real_gdp_per_capita()
+    plot_real_gdp(real_gdp_data)
+    plot_real_gdp_per_capita(real_gdp_per_capita_data)
+
+    return jsonify({"message": "Graphs updated successfully"}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
