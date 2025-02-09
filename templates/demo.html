@@ -37,17 +37,16 @@
 
     <hr>
 
-    <!-- Company Dividend Trends -->
-    <h2>Company Dividend Trends</h2>
-    <img id="dividendsGraph" src="" alt="Company Dividend Trends Graph">
-
     <!-- Real GDP -->
-    <h2>Real GDP Over Time</h2>
-    <img id="gdpGraph" src="" alt="Real GDP Graph">
+    <h2>Company Dividend Trends</h2>
+    <img src="{{ url_for('static', filename='company_dividends_plot.png') }}" alt="Company Dividend Trends Graph">
 
-    <!-- Real GDP Per Capita -->
+    <h2>Real GDP Over Time</h2>
+    <img src="{{ url_for('static', filename='real_gdp_plot.png') }}" alt="Real GDP Graph">
+
     <h2>Real GDP Per Capita Over Time</h2>
-    <img id="gdpPerCapitaGraph" src="" alt="Real GDP Per Capita Graph">
+    <img src="{{ url_for('static', filename='real_gdp_per_capita_plot.png') }}" alt="Real GDP Per Capita Graph">
+
 
     <script>
         function fetchGraphs() {

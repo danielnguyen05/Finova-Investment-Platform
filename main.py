@@ -1,59 +1,70 @@
-from Corporate_Information.data_ci import *
-from Corporate_Information.graph_ci import *
-from Economic_Indicators.data_ei import *
-from Economic_Indicators.graph_ei import *
+import os
+from Corporate_Information.data_ci import get_company_overview, get_dividends
+from Corporate_Information.graph_ci import plot_dividends_overlay
+from Economic_Indicators.data_ei import get_real_gdp, get_real_gdp_per_capita
+from Economic_Indicators.graph_ei import plot_real_gdp, plot_real_gdp_per_capita
 from Portfolio_Building.get_weights import get_weights_given_aggressiveness
 from Portfolio_Building.plot_ror import plot_value_given_aggro_and_principal
 
-def main():
-    symbol = "IBM"  
+# ✅ Ensure 'static/' exists
+STATIC_FOLDER = os.path.join(os.getcwd(), "static")
+os.makedirs(STATIC_FOLDER, exist_ok=True)
 
+def main():
+    symbol = "IBM"  # Change this to test different companies
+
+    print("\n📢 Fetching company data...")
     data = get_company_overview(symbol)
     dividends = get_dividends(symbol)
 
     if data:
-        print("\nCompany Overview:")
-        print(f"Company Name: {data.get('Name')}")
-        print(f"Sector: {data.get('Sector')}")
-        print(f"Market Capitalisation: {data.get('MarketCapitalization')}")
-        print(f"Description: {data.get('Description')}")
+        print("\n✅ Company Overview:")
+        print(f"📌 Company Name: {data.get('Name')}")
+        print(f"📌 Sector: {data.get('Sector')}")
+        print(f"📌 Market Capitalisation: {data.get('MarketCapitalization')}")
+        print(f"📌 Description: {data.get('Description')}")
     else:
-        print(f"Failed to fetch company overview for {symbol}")
+        print(f"\n❌ Failed to fetch company overview for {symbol}")
 
     if dividends and "data" in dividends:
         dividend_data = dividends["data"]
         most_recent = max(dividend_data, key=lambda d: d["ex_dividend_date"])
         highest_paying = max(dividend_data, key=lambda d: float(d["amount"]))
 
-        print("\nDividend Information:")
-        print("Most Recent Dividend:")
-        print(f"  - Ex-Dividend Date: {most_recent['ex_dividend_date']}")
-        print(f"  - Declaration Date: {most_recent['declaration_date']}")
-        print(f"  - Record Date: {most_recent['record_date']}")
-        print(f"  - Payment Date: {most_recent['payment_date']}")
-        print(f"  - Amount: {most_recent['amount']}")
-
-        print("\nHighest-Paying Dividend:")
-        print(f"  - Ex-Dividend Date: {highest_paying['ex_dividend_date']}")
-        print(f"  - Declaration Date: {highest_paying['declaration_date']}")
-        print(f"  - Record Date: {highest_paying['record_date']}")
-        print(f"  - Payment Date: {highest_paying['payment_date']}")
-        print(f"  - Amount: {highest_paying['amount']}")
+        print("\n💰 Dividend Information:")
+        print(f"📅 Most Recent Dividend - {most_recent['ex_dividend_date']}: ${most_recent['amount']}")
+        print(f"🏆 Highest-Paying Dividend - {highest_paying['ex_dividend_date']}: ${highest_paying['amount']}")
     else:
-        print(f"Failed to fetch dividend data for {symbol}")
-    
-    # # Example execution
-    # sample_test_data = get_real_gdp()
+        print(f"\n❌ Failed to fetch dividend data for {symbol}")
 
-    # if sample_test_data:
-    #     plot_real_gdp(sample_test_data)
-    
-    # Sample execution
-    # plot_dividends_overlay(symbol)
-    
-    # Sample Execution:
-    print(get_weights_given_aggressiveness("conservative")) # conservative, moderately conservative, moderately aggressive, aggressive
-    plot_value_given_aggro_and_principal("conservative", 500) # saved as a .png file
+    # ✅ Generate and save graphs inside /static/
+    print("\n📊 Generating graphs...")
+
+    # 1️⃣ Dividend Trends
+    dividends_path = os.path.join(STATIC_FOLDER, "company_dividends_plot.png")
+    plot_dividends_overlay([symbol])
+    os.rename("company_dividends_plot.png", dividends_path)
+    print(f"✅ Dividend graph saved: {dividends_path}")
+
+    # 2️⃣ Real GDP Over Time
+    gdp_data = get_real_gdp()
+    if gdp_data:
+        gdp_path = os.path.join(STATIC_FOLDER, "real_gdp_plot.png")
+        plot_real_gdp(gdp_data)
+        os.rename("real_gdp_plot.png", gdp_path)
+        print(f"✅ Real GDP graph saved: {gdp_path}")
+    else:
+        print("❌ Failed to fetch GDP data.")
+
+    # 3️⃣ Real GDP Per Capita Over Time
+    gdp_per_capita_data = get_real_gdp_per_capita()
+    if gdp_per_capita_data:
+        gdp_per_capita_path = os.path.join(STATIC_FOLDER, "real_gdp_per_capita_plot.png")
+        plot_real_gdp_per_capita(gdp_per_capita_data)
+        os.rename("real_gdp_per_capita_plot.png", gdp_per_capita_path)
+        print(f"✅ Real GDP per Capita graph saved: {gdp_per_capita_path}")
+    else:
+        print("❌ Failed to fetch GDP per capita data.")
 
 if __name__ == "__main__":
     main()

@@ -113,9 +113,17 @@ def generate_investment_plot():
 # ✅ API Endpoint: Generate Dividend Overlay Plot
 @app.route('/api/plot/dividends/<symbol>', methods=['GET'])
 def generate_dividend_plot(symbol):
-    """Creates and saves a dividend overlay plot."""
-    plot_dividends_overlay(symbol)
-    return jsonify({"message": f"Dividend overlay plot for {symbol} saved."})
+    """Creates and saves a dividend overlay plot inside /static/."""
+    save_path = plot_dividends_overlay([symbol])  # Save inside /static/
+
+    if os.path.exists(save_path):
+        return jsonify({
+            "message": f"Dividend overlay plot for {symbol} saved.",
+            "image_url": f"/static/company_dividends_plot.png"  # ✅ Correct URL
+        })
+    else:
+        return jsonify({"error": "Graph generation failed"}), 500
+
 
 
 STATIC_FOLDER = os.path.join(os.getcwd(), "static")
