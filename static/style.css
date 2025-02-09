@@ -365,9 +365,31 @@ blockquote i {
 
 /* Autocomplete Search Bar */
 .search-container {
-    position: relative;
-    width: 300px;
-    margin: auto;
+	position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#fetchDataBtn {
+    background-color: rgb(248, 92, 1);
+    color: white;
+    font-size: 18px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(248, 92, 1, 0.5);
+	pointer-events: auto !important;
+    opacity: 1 !important;
+    cursor: pointer !important;
+}
+
+#fetchDataBtn:hover {
+    background-color: rgb(255, 187, 0);
+    box-shadow: 0px 0px 20px rgba(255, 187, 0, 0.8);
 }
 
 #companySearch {
@@ -379,7 +401,10 @@ blockquote i {
     outline: none;
     background-color: white;
     color: black;
+    opacity: 1;  
+    pointer-events: auto;
 }
+
 
 .autocomplete-list {
     position: absolute;
@@ -410,7 +435,18 @@ blockquote i {
     outline: none;
 }
 
+/* Ensure button is not disabled */
 button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    background-color: rgb(248, 92, 1); /* Same color as enabled */
+    opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
 }
+
+/* Ensure all buttons are clickable */
+button {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
