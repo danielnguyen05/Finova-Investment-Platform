@@ -18,10 +18,10 @@
         <nav>
             <ul class="barra-navegacion">
                 <div class="contenedor-nav main-container">
-                    <li class="header-logo izquierda"><a href="index.html">FINOVA</a></li>
-                    <li class="nav-boton"><a href="about.html">About</a></li>
-                    <li class="nav-boton"><a href="demo.html">Demo</a></li>
-                    <li class="nav-boton"><a href="contact.html">Contact</a></li>
+                    <li class="header-logo izquierda"><a href="{{ url_for('index') }}">FINOVA</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('about') }}">About</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('demo') }}">Demo</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('contact') }}">Contact</a></li>
                 </div>
             </ul>
         </nav>
@@ -39,10 +39,10 @@
                 <p>Co-founder & Developer</p>
         
                 <a href="https://www.linkedin.com/in/daniel-nguyen-30b307306/" target="_blank">
-                    <img src="./images/linkedin.png" alt="Daniel Nguyen LinkedIn" class="linkedin-icon">
+                    <img src="{{ url_for('static', filename='images/linkedin.png') }}" alt="Daniel Nguyen LinkedIn" class="linkedin-icon">
                 </a>
                 <a href="mailto:daniel.ngu05@gmail.com">
-                    <img src="./images/envelope.png" alt="Email Daniel Nguyen" class="email-icon">
+                    <img src="{{ url_for('static', filename='images/envelope.png') }}" alt="Email Daniel Nguyen" class="email-icon">
                 </a>
             </div>
         
@@ -51,18 +51,16 @@
                 <p>Co-founder & Developer</p>
         
                 <a href="https://www.linkedin.com/in/zenan-chen-711972217/" target="_blank">
-                    <img src="./images/linkedin.png" alt="Zenan Chen LinkedIn" class="linkedin-icon">
+                    <img src="{{ url_for('static', filename='images/linkedin.png') }}" alt="Zenan Chen LinkedIn" class="linkedin-icon">
                 </a>
                 <a href="mailto:chenzn50@gmail.com">
-                    <img src="./images/envelope.png" alt="Email Zenan Chen" class="email-icon">
+                    <img src="{{ url_for('static', filename='images/envelope.png') }}" alt="Email Zenan Chen" class="email-icon">
                 </a>
             </div>
         </div>                
     </section>
-    
-      
 
-    <script src="./particles.js"></script>
-    <script src="./app.js"></script>
+    <script src="{{ url_for('static', filename='particles.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
