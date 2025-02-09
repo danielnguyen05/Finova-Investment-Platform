@@ -37,22 +37,20 @@
 
     <hr>
 
-    <!-- Real GDP -->
     <h2>Company Dividend Trends</h2>
-    <img src="{{ url_for('static', filename='company_dividends_plot.png') }}" alt="Company Dividend Trends Graph">
+    <img id="dividendsGraph" src="/static/company_dividends_plot.png" alt="Company Dividend Trends Graph">
 
     <h2>Real GDP Over Time</h2>
-    <img src="{{ url_for('static', filename='real_gdp_plot.png') }}" alt="Real GDP Graph">
+    <img id="gdpGraph" src="/static/real_gdp_plot.png" alt="Real GDP Graph">
 
     <h2>Real GDP Per Capita Over Time</h2>
-    <img src="{{ url_for('static', filename='real_gdp_per_capita_plot.png') }}" alt="Real GDP Per Capita Graph">
-
+    <img id="gdpPerCapitaGraph" src="/static/real_gdp_per_capita_plot.png" alt="Real GDP Per Capita Graph">
 
     <script>
         function fetchGraphs() {
             const company = document.getElementById("company").value;
     
-            fetch("https://finova-du4r.onrender.com/api/graphs", {
+            fetch("/api/graphs", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ company })
@@ -60,16 +58,15 @@
             .then(response => response.json())
             .then(data => {
                 console.log("API Response:", data);
-    
-                // Update images from Flask static folder
-                document.getElementById("dividendsGraph").src = "/static/company_dividends_plot.png?" + new Date().getTime();
-                document.getElementById("gdpGraph").src = "/static/real_gdp_plot.png?" + new Date().getTime();
-                document.getElementById("gdpPerCapitaGraph").src = "/static/real_gdp_per_capita_plot.png?" + new Date().getTime();
+
+                // Update images with cache-busting timestamps
+                document.getElementById("dividendsGraph").src = data.dividends_url;
+                document.getElementById("gdpGraph").src = data.gdp_url;
+                document.getElementById("gdpPerCapitaGraph").src = data.gdp_per_capita_url;
             })
             .catch(error => console.error("Error fetching graphs:", error));
         }
     </script>
-    
 
 </body>
 </html>

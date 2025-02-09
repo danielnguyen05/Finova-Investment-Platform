@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory, render_template
 import numpy as np
 import os
+import subprocess  # ✅ Added to run `main.py` when user selects a company
 
 # Import all the necessary functions from your existing modules
 from Corporate_Information.data_ci import get_company_overview
@@ -124,8 +125,6 @@ def generate_dividend_plot(symbol):
     else:
         return jsonify({"error": "Graph generation failed"}), 500
 
-
-
 STATIC_FOLDER = os.path.join(os.getcwd(), "static")
 os.makedirs(STATIC_FOLDER, exist_ok=True)  # Ensure the folder exists
 
@@ -137,30 +136,30 @@ def generate_graphs():
     if not company:
         return jsonify({"error": "Company not provided"}), 400
 
-    # Save graphs inside static/
+    # ✅ Run main.py with selected company symbol
+    subprocess.run(["python", "main.py", company], check=True)  
+
+    # ✅ Check if graphs were generated successfully
     dividends_path = os.path.join(STATIC_FOLDER, "company_dividends_plot.png")
     gdp_path = os.path.join(STATIC_FOLDER, "real_gdp_plot.png")
     gdp_per_capita_path = os.path.join(STATIC_FOLDER, "real_gdp_per_capita_plot.png")
 
-    # Generate graphs and save them to /static
-    plot_dividends_overlay([company])
-    os.rename("company_dividends_plot.png", dividends_path)
+    if not (os.path.exists(dividends_path) and os.path.exists(gdp_path) and os.path.exists(gdp_per_capita_path)):
+        return jsonify({"error": "Graphs not generated. Check main.py."}), 500
 
-    real_gdp_data = get_real_gdp()
-    plot_real_gdp(real_gdp_data)
-    os.rename("real_gdp_plot.png", gdp_path)
+    return jsonify({
+        "message": f"Graphs updated successfully for {company}",
+        "dividends_url": f"/static/company_dividends_plot.png?{os.path.getmtime(dividends_path)}",
+        "gdp_url": f"/static/real_gdp_plot.png?{os.path.getmtime(gdp_path)}",
+        "gdp_per_capita_url": f"/static/real_gdp_per_capita_plot.png?{os.path.getmtime(gdp_per_capita_path)}"
+    }), 200
 
-    real_gdp_per_capita_data = get_real_gdp_per_capita()
-    plot_real_gdp_per_capita(real_gdp_per_capita_data)
-    os.rename("real_gdp_per_capita_plot.png", gdp_per_capita_path)
 
-    return jsonify({"message": "Graphs updated successfully"}), 200
 
 # Serve static images
 @app.route('/static/<path:filename>')
 def serve_static(filename):
     return send_from_directory(STATIC_FOLDER, filename)
-
 
 if __name__ == "__main__":
     app.run(debug=True)

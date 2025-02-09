@@ -1,4 +1,5 @@
 import os
+import sys  # ✅ Import sys to accept command-line arguments
 from Corporate_Information.data_ci import get_company_overview, get_dividends
 from Corporate_Information.graph_ci import plot_dividends_overlay
 from Economic_Indicators.data_ei import get_real_gdp, get_real_gdp_per_capita
@@ -11,9 +12,13 @@ STATIC_FOLDER = os.path.join(os.getcwd(), "static")
 os.makedirs(STATIC_FOLDER, exist_ok=True)
 
 def main():
-    symbol = "IBM"  # Change this to test different companies
+    if len(sys.argv) < 2:
+        print("❌ Error: No company symbol provided!")
+        return
 
-    print("\n📢 Fetching company data...")
+    symbol = sys.argv[1]  # ✅ Get symbol from command-line argument
+
+    print(f"\n📢 Fetching company data for {symbol}...")
     data = get_company_overview(symbol)
     dividends = get_dividends(symbol)
 
@@ -41,28 +46,30 @@ def main():
     print("\n📊 Generating graphs...")
 
     # 1️⃣ Dividend Trends
-    dividends_path = os.path.join(STATIC_FOLDER, "company_dividends_plot.png")
-    plot_dividends_overlay([symbol])
-    os.rename("company_dividends_plot.png", dividends_path)
-    print(f"✅ Dividend graph saved: {dividends_path}")
+    plot_dividends_overlay([symbol])  # ✅ Generates plot, but doesn't allow specifying a path
+
+    # Move generated plot to `/static/`
+    if os.path.exists("company_dividends_plot.png"):
+        os.replace("company_dividends_plot.png", os.path.join(STATIC_FOLDER, "company_dividends_plot.png"))
+        print("✅ Dividend graph saved to /static/")
 
     # 2️⃣ Real GDP Over Time
     gdp_data = get_real_gdp()
     if gdp_data:
-        gdp_path = os.path.join(STATIC_FOLDER, "real_gdp_plot.png")
         plot_real_gdp(gdp_data)
-        os.rename("real_gdp_plot.png", gdp_path)
-        print(f"✅ Real GDP graph saved: {gdp_path}")
+        if os.path.exists("real_gdp_plot.png"):
+            os.replace("real_gdp_plot.png", os.path.join(STATIC_FOLDER, "real_gdp_plot.png"))
+            print("✅ Real GDP graph saved to /static/")
     else:
         print("❌ Failed to fetch GDP data.")
 
     # 3️⃣ Real GDP Per Capita Over Time
     gdp_per_capita_data = get_real_gdp_per_capita()
     if gdp_per_capita_data:
-        gdp_per_capita_path = os.path.join(STATIC_FOLDER, "real_gdp_per_capita_plot.png")
         plot_real_gdp_per_capita(gdp_per_capita_data)
-        os.rename("real_gdp_per_capita_plot.png", gdp_per_capita_path)
-        print(f"✅ Real GDP per Capita graph saved: {gdp_per_capita_path}")
+        if os.path.exists("real_gdp_per_capita_plot.png"):
+            os.replace("real_gdp_per_capita_plot.png", os.path.join(STATIC_FOLDER, "real_gdp_per_capita_plot.png"))
+            print("✅ Real GDP per Capita graph saved to /static/")
     else:
         print("❌ Failed to fetch GDP per capita data.")
 
