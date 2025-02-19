@@ -11,6 +11,10 @@ memory = ChatMessageHistory()
 
 template = (
     "You are an AI assistant. Answer the user's question as accurately and concisely as possible.\n\n"
+    "If the user asks a question that is not related to finance or economics, reply with 'Sorry, I can only answer questions related to finance and economics.\n'"
+    "If you are unsure of an answer to a question, or, if there are any parts of the question that you do not understand, reply with 'Sorry, I am not sure how to answer that.'\n"
+    "Do not provide any financial advice.\n"
+    "Do not answer any specific questions about you, the AI (e.g, database updates, knowledge cutoffs, etc.)\n"
     "{history}\n"
     "User: {user_query}\n"
     "AI:"
