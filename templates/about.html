@@ -1,15 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Page</title>
-</head>
-<body>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About FINOVA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-container {
+            flex: 1;
+        }
+
+        .contenedor-footer {
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+        }
+
+        .contenedor-seccion p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .contenedor-seccion ul {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+        
+    </style>
+</head>
+
+<body class="about-page">
+    
+    <header>
+        <div id="particles-js"></div>
+        <nav>
+            <ul class="barra-navegacion">
+                <div class="contenedor-nav main-container">
+                    <li class="header-logo izquierda"><a href="{{ url_for('index') }}">FINOVA</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('about') }}">About</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('demo') }}">Demo</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('contact') }}">Contact</a></li>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="main-container contenedor-seccion">
+        <h1>About FINOVA</h1>
+        <p>FINOVA is a personal finance platform created by Alice and Bob to showcase their expertise in finance and economics.</p>
+        <p>The platform offers several sophisticated features, including:</p>
+        <ul>
+            <li> - Integration of the <strong>Alpha Vantage API</strong> for real-time and accurate stock market data.</li>
+            <li> - A built-in, fine-tuned chatbot powered by <strong>Ollama 3.2</strong> to answer finance and economics-related questions.</li>
+            <li> - An <strong>interactive investment growth plot</strong> that estimates portfolio value using finance principles and <strong>linear programming</strong> (CBC model).</li>
+        </ul>
+        <p>FINOVA's frontend is built using <strong>HTML, CSS, and JavaScript</strong>, while the backend leverages <strong>Python (Flask, pandas)</strong>.</p>
+    </section>
+    
+    <footer class="contenedor-footer">
+        <p>Page by <strong>Alice, Bob</strong></p>
+        <p>Disclaimer: FINOVA is not an accredited financial institution; information provided should not be interpreted as financial advice.</p>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='particles.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
-<footer class="contenedor-footer">
-    <p>Page by <strong>Daniel Nguyen, Zenan Chen</strong></p>
-    <p>Disclaimer: responses by the chatbot are not representative of the views of the authors of this page. FINOVA is not an accredited financial institution; information provided should not be interpreted as financial advice.</p>
-</footer>
 </html>
