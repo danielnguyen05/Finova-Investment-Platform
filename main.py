@@ -73,7 +73,7 @@ def main():
     else:
         print("❌ Failed to fetch GDP per capita data.")
     
-    if len(sys.argv > 2):
+    if len(sys.argv) > 2:
         # 4️⃣ Investment Growth Over Time
         principal = float(sys.argv[2])
         aggro = sys.argv[3]
