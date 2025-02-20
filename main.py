@@ -73,19 +73,23 @@ def main():
     else:
         print("❌ Failed to fetch GDP per capita data.")
     
-    # 4️⃣ Investment Growth Over Time
-    from Portfolio_Building.plot_ror import plot_value_given_aggro_and_principal
+    if len(sys.argv > 2):
+        # 4️⃣ Investment Growth Over Time
+        principal = float(sys.argv[2])
+        aggro = sys.argv[3]
 
-    print("\n📊 Generating investment growth graph...")
+        from Portfolio_Building.plot_ror import plot_value_given_aggro_and_principal
 
-    investment_path = os.path.join(STATIC_FOLDER, "investment_growth.html")
+        print("\n📊 Generating investment growth graph...")
 
-    plot_value_given_aggro_and_principal("conservative", 50) # TODO: Fix this shit
+        investment_path = os.path.join(STATIC_FOLDER, "investment_growth.html")
 
-    if os.path.exists(investment_path):
-        print(f"✅ Investment Growth Graph saved at {investment_path}")
-    else:
-        print("❌ Failed to generate investment growth graph.")
+        plot_value_given_aggro_and_principal(aggro, principal)
+
+        if os.path.exists(investment_path):
+            print(f"✅ Investment Growth Graph saved at {investment_path}")
+        else:
+            print("❌ Failed to generate investment growth graph.")
 
 
 if __name__ == "__main__":

@@ -101,7 +101,7 @@ def generate_investment_plot():
     aggro = data["aggro"]
     symbol = data["symbol"]
 
-    subprocess.run(["python3", "main.py", symbol, str(principal), aggro], check=True)
+    subprocess.run(["python3", "main.py", symbol, principal, aggro], check=True)
 
     investment_path = os.path.join(STATIC_FOLDER, "investment_growth.html")
 
