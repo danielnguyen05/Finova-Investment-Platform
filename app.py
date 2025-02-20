@@ -99,19 +99,12 @@ def generate_investment_plot():
     data = request.json
     principal = float(data["principal"])
     aggro = data["aggro"]
-    symbol = data["symbol"]
 
-    subprocess.run(["python3", "main.py", symbol, principal, aggro], check=True)
-
-    investment_path = os.path.join(STATIC_FOLDER, "investment_growth.html")
-
-    if os.path.exists(investment_path):
-        return jsonify({
+    subprocess.run(["python3", "main.py", str(principal), str(aggro)], check=True)
+    return jsonify({
             "message": "Investment growth plot saved.",
             "graph_url": "/static/investment_growth.html"
-        })
-    else:
-        return jsonify({"error": "Graph generation failed"}), 500
+    })
 
 # ✅ API Endpoint: Get Economic Data
 @app.route('/api/economic', methods=['GET'])
