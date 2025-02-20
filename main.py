@@ -80,7 +80,7 @@ def main():
 
     investment_path = os.path.join(STATIC_FOLDER, "investment_growth.html")
 
-    plot_value_given_aggro_and_principal(aggro, principal)
+    plot_value_given_aggro_and_principal("conservative", 50) # TODO: Fix this shit
 
     if os.path.exists(investment_path):
         print(f"✅ Investment Growth Graph saved at {investment_path}")

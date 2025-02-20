@@ -13,71 +13,88 @@ def get_dividends(symbol):
     """
     Fetches dividend data for a given symbol and saves it as a JSON file.
     """
-    url = f'https://www.alphavantage.co/query?function=DIVIDENDS&symbol={symbol}&apikey={API_KEY}'
-    response = requests.get(url)
-
-    if response.status_code == SUCCESS:
-        data = response.json()
-
+    try:
         file_name = f"{symbol}_dividends.json"
         file_path = os.path.join(DIVIDEND_DIRECTORY, file_name)
-        with open(file_path, "w") as json_file:
-            json.dump(data, json_file, indent=INDENT)
-            print(f"Dividend data saved to {file_name}")
+        with open(file_path, "r") as fp:
+            data = json.load(fp)
+            dates = data["data"]
         return data
-    else:
-        print(f"Error: {response.status_code} - {response.reason}")
-        return None
+    
+    except:
+        url = f'https://www.alphavantage.co/query?function=DIVIDENDS&symbol={symbol}&apikey={API_KEY}'
+        response = requests.get(url)
+
+        if response.status_code == SUCCESS:
+            data = response.json()
+
+            file_name = f"{symbol}_dividends.json"
+            file_path = os.path.join(DIVIDEND_DIRECTORY, file_name)
+            with open(file_path, "w") as json_file:
+                json.dump(data, json_file, indent=INDENT)
+                print(f"Dividend data saved to {file_name}")
+            return data
+        else:
+            print(f"Error: {response.status_code} - {response.reason}")
+            return None
 
 
 def get_company_overview(symbol):
     """
     Fetches company overview data for a given symbol and saves it as a JSON file.
     """
-    url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={symbol}&apikey={API_KEY}'
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        data = response.json()
-
+    try:
         file_name = f"{symbol}_overview.json"
         file_path = os.path.join(CO_DIRECTORY, file_name)
-        with open(file_path, "w") as json_file:
-            json.dump(data, json_file, indent=INDENT)
-            print(f"Company overview data saved to {file_name}")
-        return data
-    
-    else:
-        print(f"Error: {response.status_code} - {response.reason}")
-        return None
+        with open(file_path, "r") as fp:
+            data = json.load(fp)
+            beta = float(data["Beta"])
+            return data
+    except:
+        url = f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={symbol}&apikey={API_KEY}'
+        response = requests.get(url)
 
-def get_ETF_portfolio_turnover(symbol: str="QQQ") -> float:
-    '''
-    Extracts ETF data from the API.
+        if response.status_code == 200:
+            data = response.json()
 
-    Input:
-    symbol: the ticker for the ETF
+            file_name = f"{symbol}_overview.json"
+            file_path = os.path.join(CO_DIRECTORY, file_name)
+            with open(file_path, "w") as json_file:
+                json.dump(data, json_file, indent=INDENT)
+                print(f"Company overview data saved to {file_name}")
+            return data
+        
+        else:
+            print(f"Error: {response.status_code} - {response.reason}")
+            return None
 
-    Output:
-    The portfolio turnover for a specific ETF
-    '''
-    url = f'https://www.alphavantage.co/query?function=ETF_PROFILE&symbol={symbol}&apikey={API_KEY}'
-    response = requests.get(url)
+    def get_ETF_portfolio_turnover(symbol: str="QQQ") -> float:
+        '''
+        Extracts ETF data from the API.
 
-    if response.status_code == SUCCESS:
-        etf_data = response.json()
+        Input:
+        symbol: the ticker for the ETF
 
-        file_name = f"{symbol}_etf_data.json"
-        file_path = os.path.join(ETF_DIRECTORY, file_name)
-        with open(file_path, "w") as json_file:
-            json.dump(etf_data, json_file, indent=INDENT)
-            print(f"ETF data saved to {file_name}")
-        return float(etf_data["portfolio_turnover"])
-    else:
-        print(f"Error: {response.status_code} - {response.reason}")
-        return None
+        Output:
+        The portfolio turnover for a specific ETF
+        '''
+        url = f'https://www.alphavantage.co/query?function=ETF_PROFILE&symbol={symbol}&apikey={API_KEY}'
+        response = requests.get(url)
 
-def get_covariance_matrix(tickers: list[str]) -> np.ndarray:
+        if response.status_code == SUCCESS:
+            etf_data = response.json()
+
+            file_name = f"{symbol}_etf_data.json"
+            file_path = os.path.join(ETF_DIRECTORY, file_name)
+            with open(file_path, "w") as json_file:
+                json.dump(etf_data, json_file, indent=INDENT)
+                print(f"ETF data saved to {file_name}")
+            return float(etf_data["portfolio_turnover"])
+        else:
+            print(f"Error: {response.status_code} - {response.reason}")
+            return None
+
+def get_covariance_matrix(tickers: list[str]) -> np.ndarray | None:
     '''
     Returns the covariance matrix of the companies listed
 
