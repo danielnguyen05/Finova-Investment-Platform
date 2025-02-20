@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory, render_template
 import numpy as np
 import os
 import subprocess  # ✅ Added to run `main.py` when user selects a company
+from ai import get_response  # ✅ Import AI response function
 
 # Import all the necessary functions from your existing modules
 from Corporate_Information.data_ci import get_company_overview
@@ -18,35 +19,39 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    '''
-    Opens the template index.html
-
-    Inputs;
-    None
-
-    Returns:
-    output: string
-    '''
     return render_template("index.html")
 
 @app.route("/about")
 def about():
     return render_template("about.html")
 
-# ✅ Route: Serve Demo Page
 @app.route("/demo")
 def demo():
-    return render_template("demo.html")
+    return render_template("demo.html")  # ✅ Ensure demo.html has chatbot UI
 
-# ✅ Route: Serve Contact Page
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
 
+@app.route("/api/chat", methods=["POST"])
+def chat():
+    """Processes user messages and returns AI responses."""
+    try:
+        data = request.get_json()
+        if not data or "message" not in data:
+            return jsonify({"response": "Error: No message received"}), 400
+
+        user_message = data["message"]
+        ai_response = get_response(user_message)  # ✅ Call AI model
+        return jsonify({"response": ai_response})
+
+    except Exception as e:
+        print("Chat API error:", str(e))
+        return jsonify({"response": "Error: AI is not available."}), 500
+
 # ✅ API Endpoint: Get Company Overview
 @app.route('/api/company/<symbol>', methods=['GET'])
 def get_company(symbol):
-    """Fetches company overview data for a given stock symbol."""
     data = get_company_overview(symbol)
     if not data:
         return jsonify({"error": f"Failed to fetch company overview for {symbol}"}), 404
@@ -55,7 +60,6 @@ def get_company(symbol):
 # ✅ API Endpoint: Get Dividend Information
 @app.route('/api/dividends/<symbol>', methods=['GET'])
 def get_dividends(symbol):
-    """Fetches dividend information for a given stock symbol."""
     dividends = get_dividends(symbol)
     if not dividends or "data" not in dividends:
         return jsonify({"error": f"Failed to fetch dividend data for {symbol}"}), 404
@@ -72,7 +76,6 @@ def get_dividends(symbol):
 # ✅ API Endpoint: Get Investment Data
 @app.route('/api/investment', methods=['POST'])
 def get_investment_data():
-    """Calculates investment growth based on user input."""
     data = request.json
     principal = float(data["principal"])
     aggro = data["aggro"]
@@ -93,7 +96,6 @@ def get_investment_data():
 # ✅ API Endpoint: Get Economic Data
 @app.route('/api/economic', methods=['GET'])
 def get_economic():
-    """Fetches economic indicators like GDP and inflation."""
     data = get_real_gdp()
     if not data:
         return jsonify({"error": "Failed to fetch economic data"}), 404
@@ -102,7 +104,6 @@ def get_economic():
 # ✅ API Endpoint: Generate and Save Investment Growth Plot
 @app.route('/api/plot/investment', methods=['POST'])
 def generate_investment_plot():
-    """Creates and saves an investment growth plot."""
     data = request.json
     principal = float(data["principal"])
     aggro = data["aggro"]
@@ -114,19 +115,18 @@ def generate_investment_plot():
 # ✅ API Endpoint: Generate Dividend Overlay Plot
 @app.route('/api/plot/dividends/<symbol>', methods=['GET'])
 def generate_dividend_plot(symbol):
-    """Creates and saves a dividend overlay plot inside /static/."""
-    save_path = plot_dividends_overlay([symbol])  # Save inside /static/
+    save_path = plot_dividends_overlay([symbol])
 
     if os.path.exists(save_path):
         return jsonify({
             "message": f"Dividend overlay plot for {symbol} saved.",
-            "image_url": f"/static/company_dividends_plot.png"  # ✅ Correct URL
+            "image_url": f"/static/company_dividends_plot.png"
         })
     else:
         return jsonify({"error": "Graph generation failed"}), 500
 
 STATIC_FOLDER = os.path.join(os.getcwd(), "static")
-os.makedirs(STATIC_FOLDER, exist_ok=True)  # Ensure the folder exists
+os.makedirs(STATIC_FOLDER, exist_ok=True)
 
 @app.route("/api/graphs", methods=["POST"])
 def generate_graphs():
@@ -136,10 +136,8 @@ def generate_graphs():
     if not company:
         return jsonify({"error": "Company not provided"}), 400
 
-    # ✅ Run main.py with selected company symbol
-    subprocess.run(["python", "main.py", company], check=True)  
+    subprocess.run(["python", "main.py", company], check=True)
 
-    # ✅ Check if graphs were generated successfully
     dividends_path = os.path.join(STATIC_FOLDER, "company_dividends_plot.png")
     gdp_path = os.path.join(STATIC_FOLDER, "real_gdp_plot.png")
     gdp_per_capita_path = os.path.join(STATIC_FOLDER, "real_gdp_per_capita_plot.png")
@@ -154,9 +152,6 @@ def generate_graphs():
         "gdp_per_capita_url": f"/static/real_gdp_per_capita_plot.png?{os.path.getmtime(gdp_per_capita_path)}"
     }), 200
 
-
-
-# Serve static images
 @app.route('/static/<path:filename>')
 def serve_static(filename):
     return send_from_directory(STATIC_FOLDER, filename)

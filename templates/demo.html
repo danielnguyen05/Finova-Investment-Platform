@@ -13,6 +13,30 @@
 </head>
 <body class="about-page">
 
+    <!-- Floating Chatbot Button -->
+    <!-- Chatbot Button (To Open/Close) -->
+    <button id="chatbot-btn"></button>
+
+    <!-- Chatbot Container -->
+    <div class="chat-container" id="chat-container">
+        <!-- Chat Header -->
+        <div class="chat-header">Personal Finance Chatbot</div>
+
+        <!-- Close Chat Button -->
+        <button id="close-chat" class="chat-close-btn">▲</button>
+
+        <!-- Chat Messages -->
+        <div id="chat-messages"></div>
+
+        <!-- Chat Input -->
+        <div class="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
     <header>
         <div id="particles-js"></div>
         <nav>

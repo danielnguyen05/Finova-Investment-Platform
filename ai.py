@@ -8,7 +8,7 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # AI model and memory
-model = OllamaLLM(model="llama3.2")
+model = OllamaLLM(model="llama3.1")
 memory = ChatMessageHistory()
 
 # Load all financial data at startup

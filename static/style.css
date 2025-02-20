@@ -463,3 +463,201 @@ blockquote i {
     margin-top: 30px;
     margin-bottom: 80px; /* Adds space between sections */
 }
+
+/* Chatbot Styling */
+.chat-container {
+    width: 350px;
+    height: 500px;
+    position: fixed;
+    bottom: 80px; /* Adjusted so it sits above button */
+    right: 20px;
+    background: #111;
+    color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    display: none; /* Initially hidden */
+    flex-direction: column;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    transform: scale(0.9);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.chat-container.open {
+    display: flex;
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Chat Messages */
+#chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    
+    /* ⬆️ Ensure messages are above everything */
+    position: relative;
+    z-index: 10000;
+}
+
+/* Message Bubble Styling */
+.message {
+    max-width: 80%;
+    margin: 5px 10px;
+    padding: 12px 16px;
+    border-radius: 18px;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* User Message - BLUE like iMessage */
+.user-message {
+    background: #007AFF;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 18px;
+    border-top-left-radius: 18px;
+}
+
+/* AI Message - GREY like iMessage */
+.ai-message {
+    background: #333;
+    color: white;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 18px;
+    border-top-left-radius: 18px;
+}
+
+/* Chat Input Bar */
+.chat-input-container {
+    display: flex;
+    border-top: 1px solid #444;
+    background: #222;
+    padding: 8px;
+    
+    /* ⬆️ Ensure input bar is fully accessible */
+    position: relative;
+    z-index: 10001;
+}
+
+/* Text Input Field */
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background: #333;
+    color: white;
+    border-radius: 18px;
+    padding-left: 12px;
+    font-size: 14px;
+    
+    /* ⬆️ Ensure text input is fully interactable */
+    z-index: 10002;
+}
+
+/* Send Button - Orange like iOS */
+#send-btn {
+    background: #007AFF;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 8px;
+    font-size: 14px;
+
+    /* ⬆️ Ensure the button is clickable */
+    z-index: 10003;
+}
+
+/* Send Button Hover Effect */
+#send-btn:hover {
+    background: #005ecb;
+}
+
+/* Scrollbar Customization */
+#chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chat-messages::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 6px;
+}
+
+#chat-messages::-webkit-scrollbar-track {
+    background: #222;
+}
+
+#chatbot-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: url('/static/images/robot.png') no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 9998;
+    transition: all 0.3s ease-in-out;
+}
+
+#chatbot-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Close Button (Dropdown Arrow) */
+#close-chat {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transform: rotate(180deg); /* Arrow Down */
+}
+
+/* Close Button Hover */
+#close-chat:hover {
+    color: #ddd;
+}
+
+/* Scrollbar Customization */
+#chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chat-messages::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 6px;
+}
+
+#chat-messages::-webkit-scrollbar-track {
+    background: #222;
+}
+
+/* Chat Header */
+.chat-header {
+    background: #007AFF; /* Blue like iMessage */
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
