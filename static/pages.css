@@ -48,7 +48,7 @@ h2 {
 /* Search Bar */
 .search-container {
     position: relative;
-    width: 300px;
+    width: 200px;
     margin: auto;
 }
 
@@ -107,3 +107,45 @@ h2 {
     background-color: rgb(255, 187, 0);
     box-shadow: 0px 0px 20px rgba(255, 187, 0, 0.8);
 }
+
+/* Ensure the navigation bar is consistent across pages */
+.barra-navegacion {
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.459);
+    z-index: 20;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.contenedor-nav {
+    display: flex;
+    gap: 15px;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: flex-end; /* Aligns nav links to the right */
+}
+
+.header-logo {
+    font-weight: 900;
+    font-size: 40px;
+    margin-top: 0;
+    color: rgb(215, 215, 215);
+    margin-right: auto; /* Pushes FINOVA to the left */
+}
+
+.nav-boton a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.nav-boton a:hover {
+    color: rgb(248, 92, 1);
+    font-size: 1.2rem;
+    transition: 0.3s;
+    text-shadow: rgba(218, 165, 32, 0.568) 0px 2px 4px;
+}
+

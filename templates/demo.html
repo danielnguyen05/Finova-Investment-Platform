@@ -1,48 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Page</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='pages.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 <body class="about-page">
 
-    <!-- Particles.js Background -->
-    <div id="particles-js"></div>
+    <header>
+        <div id="particles-js"></div>
+        <nav>
+            <ul class="barra-navegacion">
+                <div class="contenedor-nav main-container">
+                    <li class="header-logo izquierda"><a href="{{ url_for('index') }}">FINOVA</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('about') }}">About</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('demo') }}">Demo</a></li>
+                    <li class="nav-boton"><a href="{{ url_for('contact') }}">Contact</a></li>
+                </div>
+            </ul>
+        </nav>
+    </header>
 
-    <h1>Demo Page</h1>
-
-    <!-- Financial Data Search Section -->
-    <section id="financial-search">
-        <h2>Financial Data Search</h2>
-
-        <div class="search-container">
-            <input type="text" id="companySearch" placeholder="Search for a company..." autocomplete="off">
-            <div id="autocompleteResults" class="autocomplete-list"></div>
+    <section class="main-container contenedor-seccion">
+        <h1>Demo</h1>
+        <p>Explore the key features of our platform and visualize real-time financial data.</p>
+    
+        <div class="contact-container">
+            <div class="contact-card">
+                <h2>Financial Data Search</h2>
+                <div class="search-container">
+                    <input type="text" id="companySearch" placeholder="Search for a company..." autocomplete="off">
+                    <div id="autocompleteResults" class="autocomplete-list"></div>
+                </div>
+                <button id="fetchDataBtn" disabled>Get Data</button>
+            </div>
         </div>
-
-        <button id="fetchDataBtn" disabled>Get Data</button>
 
         <hr>
 
-        <h2>Company Dividend Trends</h2>
-        <img id="dividendsGraph" src="/static/company_dividends_plot.png" alt="Company Dividend Trends Graph">
+        <div class="financial-visuals">
+            <h2>Company Dividend Trends</h2>
+            <img id="dividendsGraph" src="/static/company_dividends_plot.png" alt="Company Dividend Trends Graph">
 
-        <h2>Real GDP Over Time</h2>
-        <img id="gdpGraph" src="/static/real_gdp_plot.png" alt="Real GDP Graph">
+            <h2>Real GDP Over Time</h2>
+            <img id="gdpGraph" src="/static/real_gdp_plot.png" alt="Real GDP Graph">
 
-        <h2>Real GDP Per Capita Over Time</h2>
-        <img id="gdpPerCapitaGraph" src="/static/real_gdp_per_capita_plot.png" alt="Real GDP Per Capita Graph">
+            <h2>Real GDP Per Capita Over Time</h2>
+            <img id="gdpPerCapitaGraph" src="/static/real_gdp_per_capita_plot.png" alt="Real GDP Per Capita Graph">
+        </div>          
     </section>
 
-    <!-- Load Particles.js -->
     <script src="{{ url_for('static', filename='particles.js') }}"></script>
     <script src="{{ url_for('static', filename='app.js') }}"></script>
 
-    <!-- Financial Data Search Script -->
     <script>
         let companies = [];
         const searchInput = document.getElementById("companySearch");
@@ -60,8 +76,6 @@
         }
 
         function updateAutocomplete() {
-            console.log("🔍 Running updateAutocomplete...");
-
             if (companies.length === 0) {
                 console.error("❌ Companies data not loaded yet!");
                 return;
@@ -80,8 +94,6 @@
                 (company.name.toLowerCase().includes(searchValue) || 
                 company.symbol.toLowerCase().includes(searchValue))
             );
-
-            console.log("🔎 Filtered Results:", filtered.length);
 
             if (filtered.length === 0) {
                 resultsContainer.style.display = "none";
@@ -124,8 +136,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log("✅ API Response:", data);
-
                 if (data.error) {
                     console.error("❌ Error from API:", data.error);
                     return;
