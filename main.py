@@ -41,7 +41,7 @@ def main():
             print(f"📅 Most Recent Dividend - {most_recent['ex_dividend_date']}: ${most_recent['amount']}")
             print(f"🏆 Highest-Paying Dividend - {highest_paying['ex_dividend_date']}: ${highest_paying['amount']}")
         else:
-            print(f"\n❌ Failed to fetch dividend data for {symbol}")
+            print(f"\n❌ No dividend data available for {symbol}")
 
         # ✅ Generate and save graphs inside /static/
         print("\n📊 Generating graphs...")
