@@ -72,6 +72,21 @@ def main():
             print("✅ Real GDP per Capita graph saved to /static/")
     else:
         print("❌ Failed to fetch GDP per capita data.")
+    
+    # 4️⃣ Investment Growth Over Time
+    from Portfolio_Building.plot_ror import plot_value_given_aggro_and_principal
+
+    print("\n📊 Generating investment growth graph...")
+
+    investment_path = os.path.join(STATIC_FOLDER, "investment_growth.html")
+
+    plot_value_given_aggro_and_principal(aggro, principal)
+
+    if os.path.exists(investment_path):
+        print(f"✅ Investment Growth Graph saved at {investment_path}")
+    else:
+        print("❌ Failed to generate investment growth graph.")
+
 
 if __name__ == "__main__":
     main()

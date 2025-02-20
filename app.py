@@ -93,6 +93,26 @@ def get_investment_data():
         "upper": (principal * (1 + upper_bound) ** t).tolist()
     })
 
+@app.route("/api/plot/investment", methods=["POST"])
+def generate_investment_plot():
+    """Creates and saves an investment growth plot."""
+    data = request.json
+    principal = float(data["principal"])
+    aggro = data["aggro"]
+    symbol = data["symbol"]
+
+    subprocess.run(["python", "main.py", symbol, str(principal), aggro], check=True)
+
+    investment_path = os.path.join(STATIC_FOLDER, "investment_growth.html")
+
+    if os.path.exists(investment_path):
+        return jsonify({
+            "message": "Investment growth plot saved.",
+            "graph_url": "/static/investment_growth.html"
+        })
+    else:
+        return jsonify({"error": "Graph generation failed"}), 500
+
 # ✅ API Endpoint: Get Economic Data
 @app.route('/api/economic', methods=['GET'])
 def get_economic():
@@ -100,17 +120,6 @@ def get_economic():
     if not data:
         return jsonify({"error": "Failed to fetch economic data"}), 404
     return jsonify(data)
-
-# ✅ API Endpoint: Generate and Save Investment Growth Plot
-@app.route('/api/plot/investment', methods=['POST'])
-def generate_investment_plot():
-    data = request.json
-    principal = float(data["principal"])
-    aggro = data["aggro"]
-
-    plot_value_given_aggro_and_principal(aggro, principal)
-
-    return jsonify({"message": "Investment growth plot saved."})
 
 # ✅ API Endpoint: Generate Dividend Overlay Plot
 @app.route('/api/plot/dividends/<symbol>', methods=['GET'])

@@ -77,7 +77,28 @@
 
             <h2>Real GDP Per Capita Over Time</h2>
             <img id="gdpPerCapitaGraph" src="/static/real_gdp_per_capita_plot.png" alt="Real GDP Per Capita Graph">
-        </div>          
+        </div>  
+        
+        <div class="investment-container">
+            <h2>Investment Growth Calculator</h2>
+            
+            <label for="investmentAmount">Enter Investment Amount ($):</label>
+            <input type="text" id="investment-input" placeholder="Enter investment amount">
+
+            <div>
+                <label>Select Risk Level:</label><br>
+                <input type="radio" name="risk-level" value="conservative"> Conservative<br>
+                <input type="radio" name="risk-level" value="moderately conservative"> Moderately Conservative<br>
+                <input type="radio" name="risk-level" value="moderately aggressive"> Moderately Aggressive<br>
+                <input type="radio" name="risk-level" value="aggressive"> Aggressive<br>
+            </div>
+
+            <button id="investment-btn">Generate Investment Growth</button>
+
+        
+            <div id="investmentGraph"></div> <!-- Graph will appear here -->
+        </div>
+        
     </section>
 
     <script src="{{ url_for('static', filename='particles.js') }}"></script>

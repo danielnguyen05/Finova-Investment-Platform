@@ -1,7 +1,7 @@
 import os, json, requests, pandas
 import numpy as np
 
-API_KEY = "OBUZDCEF32FMATSX" # "T4F7GDVAADDA0L3B"  "6Z27NWGRHMUYEX31" "OBUZDCEF32FMATSX" when we do it for real
+API_KEY = "demo" # "T4F7GDVAADDA0L3B"  "6Z27NWGRHMUYEX31" "OBUZDCEF32FMATSX" when we do it for real
 INDENT = 4
 SUCCESS = 200
 DIVIDEND_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', 'Dividend_Data')

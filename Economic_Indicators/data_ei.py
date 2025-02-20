@@ -1,6 +1,6 @@
 import requests, json, os
 
-API_KEY_2 = "OBUZDCEF32FMATSX" # "T4F7GDVAADDA0L3B"  "6Z27NWGRHMUYEX31" "OBUZDCEF32FMATSX" when we do it for real
+API_KEY_2 = "demo" # "T4F7GDVAADDA0L3B"  "6Z27NWGRHMUYEX31" "OBUZDCEF32FMATSX" when we do it for real
 SUCCESS = 200
 INDENT = 4
 GDP_FNAME = "Real_GDP.json"

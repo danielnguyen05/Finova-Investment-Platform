@@ -661,3 +661,66 @@ blockquote i {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
+
+.investment-container {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 10px;
+    width: 400px;
+    margin: auto;
+}
+
+.investment-container h2 {
+    color: #fff;
+}
+
+#investmentAmount {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+}
+
+.risk-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.risk-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: grey;
+    color: white;
+    transition: 0.3s;
+}
+
+.risk-btn:hover {
+    background-color: darkgrey;
+}
+
+.risk-btn.selected {
+    background-color: #007AFF;
+}
+
+#generateGraphBtn {
+    margin-top: 15px;
+    padding: 12px;
+    background: #007AFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#generateGraphBtn:hover {
+    background: #005ecb;
+}
