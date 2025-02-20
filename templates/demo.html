@@ -3,77 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Data Search</title>
+    <title>Demo Page</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .search-container {
-            position: relative;
-            width: 300px;
-            margin: auto;
-        }
-        #companySearch {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            outline: none;
-        }
-        .autocomplete-list {
-            position: absolute;
-            width: 100%;
-            background: white;
-            border: 1px solid #ccc;
-            max-height: 200px;
-            overflow-y: auto;
-            z-index: 10;
-            border-radius: 5px;
-            display: none;
-        }
-        .autocomplete-item {
-            padding: 10px;
-            cursor: pointer;
-            border-bottom: 1px solid #eee;
-        }
-        .autocomplete-item:hover {
-            background: #f0f0f0;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='pages.css') }}">
 </head>
-<body>
+<body class="about-page">
 
-    <h1>Financial Data Search</h1>
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
 
-    <!-- Search Bar -->
-    <div class="search-container">
-        <input type="text" id="companySearch" placeholder="Search for a company..." autocomplete="off">
-        <div id="autocompleteResults" class="autocomplete-list"></div>
-    </div>
+    <h1>Demo Page</h1>
 
-    <button id="fetchDataBtn" disabled>Get Data</button>
+    <!-- Financial Data Search Section -->
+    <section id="financial-search">
+        <h2>Financial Data Search</h2>
 
-    <hr>
+        <div class="search-container">
+            <input type="text" id="companySearch" placeholder="Search for a company..." autocomplete="off">
+            <div id="autocompleteResults" class="autocomplete-list"></div>
+        </div>
 
-    <h2>Company Dividend Trends</h2>
-    <img id="dividendsGraph" src="/static/company_dividends_plot.png" alt="Company Dividend Trends Graph">
+        <button id="fetchDataBtn" disabled>Get Data</button>
 
-    <h2>Real GDP Over Time</h2>
-    <img id="gdpGraph" src="/static/real_gdp_plot.png" alt="Real GDP Graph">
+        <hr>
 
-    <h2>Real GDP Per Capita Over Time</h2>
-    <img id="gdpPerCapitaGraph" src="/static/real_gdp_per_capita_plot.png" alt="Real GDP Per Capita Graph">
+        <h2>Company Dividend Trends</h2>
+        <img id="dividendsGraph" src="/static/company_dividends_plot.png" alt="Company Dividend Trends Graph">
 
+        <h2>Real GDP Over Time</h2>
+        <img id="gdpGraph" src="/static/real_gdp_plot.png" alt="Real GDP Graph">
+
+        <h2>Real GDP Per Capita Over Time</h2>
+        <img id="gdpPerCapitaGraph" src="/static/real_gdp_per_capita_plot.png" alt="Real GDP Per Capita Graph">
+    </section>
+
+    <!-- Load Particles.js -->
+    <script src="{{ url_for('static', filename='particles.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+    <!-- Financial Data Search Script -->
     <script>
         let companies = [];
         const searchInput = document.getElementById("companySearch");
         const resultsContainer = document.getElementById("autocompleteResults");
         const fetchButton = document.getElementById("fetchDataBtn");
 
-        // ✅ Load JSON file
         async function loadCompanies() {
             try {
                 const response = await fetch("/static/companies.json");
@@ -84,7 +59,6 @@
             }
         }
 
-        // ✅ FIXED: Ensure null values don’t break the search
         function updateAutocomplete() {
             console.log("🔍 Running updateAutocomplete...");
 
@@ -101,9 +75,8 @@
                 return;
             }
 
-            // ✅ Fix: Skip companies with missing "name" or "symbol" before calling .toLowerCase()
             const filtered = companies.filter(company =>
-                company.name && company.symbol &&  // Ensure both exist
+                company.name && company.symbol &&  
                 (company.name.toLowerCase().includes(searchValue) || 
                 company.symbol.toLowerCase().includes(searchValue))
             );
@@ -115,7 +88,6 @@
                 return;
             }
 
-            // ✅ Populate dropdown
             filtered.slice(0, 10).forEach(company => {
                 const div = document.createElement("div");
                 div.classList.add("autocomplete-item");
@@ -127,7 +99,6 @@
             resultsContainer.style.display = "block";
         }
 
-        // ✅ Select company
         function selectCompany(symbol) {
             searchInput.value = symbol;
             resultsContainer.style.display = "none";
@@ -135,7 +106,6 @@
             console.log("✅ Selected:", symbol);
         }
 
-        // ✅ Fetch data from API and update graphs
         async function fetchGraphs() {
             const company = searchInput.value.trim();
             if (!company) {
@@ -145,7 +115,7 @@
 
             console.log("📡 Sending request to /api/graphs for:", company);
 
-            fetchButton.disabled = true;  // Prevent spam clicking
+            fetchButton.disabled = true;
 
             fetch("/api/graphs", {
                 method: "POST",
@@ -161,7 +131,6 @@
                     return;
                 }
 
-                // ✅ Update images dynamically
                 document.getElementById("dividendsGraph").src = data.dividends_url + "?" + new Date().getTime();
                 document.getElementById("gdpGraph").src = data.gdp_url + "?" + new Date().getTime();
                 document.getElementById("gdpPerCapitaGraph").src = data.gdp_per_capita_url + "?" + new Date().getTime();
@@ -174,27 +143,12 @@
             });
         }
 
-        // ✅ Attach event listeners
         searchInput.addEventListener("input", updateAutocomplete);
-        searchInput.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-            }
-        });
-
-        document.addEventListener("click", (event) => {
-            if (!searchInput.contains(event.target) && !resultsContainer.contains(event.target)) {
-                resultsContainer.style.display = "none";
-            }
-        });
-
-        // ✅ Attach event listener to button
         document.addEventListener("DOMContentLoaded", () => {
-            console.log("✅ Attaching fetchGraphs() to button...");
             fetchButton.addEventListener("click", fetchGraphs);
             loadCompanies();
         });
-
     </script>
+
 </body>
 </html>

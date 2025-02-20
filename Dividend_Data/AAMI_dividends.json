@@ -1,0 +1,208 @@
+{
+    "symbol": "AAMI",
+    "data": [
+        {
+            "ex_dividend_date": "2025-03-14",
+            "declaration_date": "2025-02-06",
+            "record_date": "2025-03-14",
+            "payment_date": "2025-03-28",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2024-12-13",
+            "declaration_date": "2024-10-29",
+            "record_date": "2024-12-13",
+            "payment_date": "2024-12-27",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2024-09-13",
+            "declaration_date": "2024-07-30",
+            "record_date": "2024-09-13",
+            "payment_date": "2024-09-27",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2024-06-14",
+            "declaration_date": "2024-05-02",
+            "record_date": "2024-06-14",
+            "payment_date": "2024-06-28",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2024-03-14",
+            "declaration_date": "2024-01-26",
+            "record_date": "2024-03-15",
+            "payment_date": "2024-03-28",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2023-12-14",
+            "declaration_date": "2023-11-02",
+            "record_date": "2023-12-15",
+            "payment_date": "2023-12-28",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2023-09-14",
+            "declaration_date": "2023-08-03",
+            "record_date": "2023-09-15",
+            "payment_date": "2023-09-29",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2023-06-15",
+            "declaration_date": "2023-05-04",
+            "record_date": "2023-06-16",
+            "payment_date": "2023-06-30",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2023-03-16",
+            "declaration_date": "2023-02-02",
+            "record_date": "2023-03-17",
+            "payment_date": "2023-03-31",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2022-12-15",
+            "declaration_date": "2022-11-03",
+            "record_date": "2022-12-16",
+            "payment_date": "2022-12-30",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2022-09-15",
+            "declaration_date": "2022-07-28",
+            "record_date": "2022-09-16",
+            "payment_date": "2022-09-30",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2022-06-09",
+            "declaration_date": "2022-04-28",
+            "record_date": "2022-06-10",
+            "payment_date": "2022-06-24",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2022-03-10",
+            "declaration_date": "2022-02-03",
+            "record_date": "2022-03-11",
+            "payment_date": "2022-03-25",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2021-12-16",
+            "declaration_date": "2021-10-28",
+            "record_date": "2021-12-17",
+            "payment_date": "2021-12-30",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2021-09-09",
+            "declaration_date": "2021-07-29",
+            "record_date": "2021-09-10",
+            "payment_date": "2021-09-24",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2021-06-10",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2021-03-11",
+            "declaration_date": "2021-02-02",
+            "record_date": "2021-03-12",
+            "payment_date": "2021-03-26",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2020-12-10",
+            "declaration_date": "2020-10-27",
+            "record_date": "2020-12-11",
+            "payment_date": "2020-12-29",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2020-09-10",
+            "declaration_date": "2020-07-28",
+            "record_date": "2020-09-11",
+            "payment_date": "2020-09-25",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2020-06-11",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.01"
+        },
+        {
+            "ex_dividend_date": "2020-03-12",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        },
+        {
+            "ex_dividend_date": "2020-02-12",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        },
+        {
+            "ex_dividend_date": "2019-12-12",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        },
+        {
+            "ex_dividend_date": "2019-09-12",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        },
+        {
+            "ex_dividend_date": "2019-06-13",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        },
+        {
+            "ex_dividend_date": "2019-03-14",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        },
+        {
+            "ex_dividend_date": "2018-12-13",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        },
+        {
+            "ex_dividend_date": "2018-09-13",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        },
+        {
+            "ex_dividend_date": "2018-06-14",
+            "declaration_date": "None",
+            "record_date": "None",
+            "payment_date": "None",
+            "amount": "0.1"
+        }
+    ]
+}

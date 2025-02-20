@@ -434,19 +434,3 @@ blockquote i {
 #companySearch:focus {
     outline: none;
 }
-
-/* Ensure button is not disabled */
-button:disabled {
-    background-color: rgb(248, 92, 1); /* Same color as enabled */
-    opacity: 1 !important;
-    cursor: pointer !important;
-    pointer-events: auto !important;
-}
-
-/* Ensure all buttons are clickable */
-button {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-}
-
