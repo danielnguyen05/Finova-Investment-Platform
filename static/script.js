@@ -74,17 +74,22 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ Investment Growth Feature
     // =============================
 
-    // Investment Elements
     const investmentInput = document.getElementById("investment-input");
     const investmentBtn = document.getElementById("investment-btn");
     const investmentGraph = document.getElementById("investmentGraph");
     let selectedRisk = null;
 
-    // ✅ Handle Risk Level Selection
-    const riskButtons = document.querySelectorAll('input[name="risk-level"]');
+    // ✅ Handle Risk Level Selection + Highlighting
+    const riskButtons = document.querySelectorAll(".risk-btn");
     riskButtons.forEach(button => {
-        button.addEventListener("change", function () {
-            selectedRisk = this.value;
+        button.addEventListener("click", function () {
+            selectedRisk = this.getAttribute("data-risk");
+
+            // Remove highlight from all, then highlight the selected one
+            riskButtons.forEach(btn => btn.classList.remove("selected"));
+            this.classList.add("selected");
+
+            console.log("✅ Selected Risk Level:", selectedRisk);
         });
     });
 
@@ -109,11 +114,18 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("✅ API Response:", data);
 
             if (data.graph_url) {
-                investmentGraph.innerHTML = `<iframe src="${data.graph_url}" width="100%" height="600px"></iframe>`;
+                // ✅ Fix: Make sure the image URL is correctly used
+                investmentGraph.innerHTML = `
+                    <img src="${data.graph_url}?timestamp=${new Date().getTime()}" 
+                         alt="Investment Growth Graph"
+                         width="100%" 
+                         style="max-width: 800px; display: block; margin: auto; border-radius: 10px; margin-top: 20px;">
+                `;
             } else {
                 alert("Error generating investment graph.");
             }
         })
         .catch(error => console.error("❌ API Request Failed:", error));
     });
+
 });

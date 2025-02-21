@@ -100,7 +100,7 @@ def generate_investment_plot():
     principal = float(data["principal"])
     aggro = data["aggro"]
 
-    subprocess.run(["python3", "main.py", str(principal), str(aggro)], check=True)
+    subprocess.run(["python", "main.py", str(principal), str(aggro)], check=True)
     return jsonify({
             "message": "Investment growth plot saved.",
             "graph_url": "/static/investment_growth.html"
@@ -138,7 +138,7 @@ def generate_graphs():
     if not company:
         return jsonify({"error": "Company not provided"}), 400
 
-    subprocess.run(["python3", "main.py", company], check=True)
+    subprocess.run(["python", "main.py", company], check=True)
 
     dividends_path = os.path.join(STATIC_FOLDER, "company_dividends_plot.png")
     gdp_path = os.path.join(STATIC_FOLDER, "real_gdp_plot.png")

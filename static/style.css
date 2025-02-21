@@ -662,65 +662,106 @@ blockquote i {
     border-top-right-radius: 20px;
 }
 
+/* Investment Growth Section Styling */
 .investment-container {
     text-align: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.6);
+    margin-top: 50px;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.8); /* Darker background */
+    border-radius: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.6); /* Bigger border */
+    width: 50%;
+    margin-left: 0;
+}
+
+.investment-container h1 {
+    font-size: 2rem;
     color: white;
-    border-radius: 10px;
-    width: 400px;
-    margin: auto;
+    text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.2);
 }
 
-.investment-container h2 {
-    color: #fff;
+#investment-input {
+    width: 250px; /* Increased width */
+    padding: 5px;
+    border-radius: 15px; /* More rounded */
+    border: 2px solid #ccc; /* Slightly thicker border */
+    font-size: 18px; /* Larger font */
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
 }
 
+/* Input Styling */
 #investmentAmount {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
+    width: 80%;
+    padding: 12px;
     font-size: 16px;
-    border-radius: 5px;
     border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: white;
+    color: black;
+    margin-top: 10px;
 }
 
-.risk-buttons {
+/* Risk Level Buttons */
+.risk-btn-container {
     display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.risk-btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .risk-btn {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    background-color: grey;
+    background-color: rgb(248, 92, 1);
     color: white;
-    transition: 0.3s;
+    font-size: 16px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(248, 92, 1, 0.5);
 }
 
 .risk-btn:hover {
-    background-color: darkgrey;
+    background-color: rgb(255, 187, 0);
+    box-shadow: 0px 0px 20px rgba(255, 187, 0, 0.8);
 }
 
 .risk-btn.selected {
-    background-color: #007AFF;
+    background-color: rgb(255, 187, 0);
+    box-shadow: 0px 0px 20px rgba(255, 187, 0, 0.8);
 }
-
-#generateGraphBtn {
-    margin-top: 15px;
-    padding: 12px;
-    background: #007AFF;
+/* Generate Investment Growth Button */
+#investment-btn {
+    margin-top: 20px;
+    background-color: rgb(248, 92, 1);
     color: white;
+    font-size: 18px;
+    padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
     cursor: pointer;
-    width: 100%;
+    box-shadow: 0px 0px 10px rgba(248, 92, 1, 0.5);
 }
 
-#generateGraphBtn:hover {
-    background: #005ecb;
+#investment-btn:hover {
+    background-color: rgb(255, 187, 0);
+    box-shadow: 0px 0px 20px rgba(255, 187, 0, 0.8);
+}
+
+.investment-graph-container {
+    margin-top: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

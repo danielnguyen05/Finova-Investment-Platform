@@ -85,15 +85,17 @@
             <label for="investmentAmount">Enter Investment Amount ($):</label>
             <input type="text" id="investment-input" placeholder="Enter investment amount">
 
-            <div>
-                <label>Select Risk Level:</label><br>
-                <input type="radio" name="risk-level" value="conservative"> Conservative<br>
-                <input type="radio" name="risk-level" value="moderately conservative"> Moderately Conservative<br>
-                <input type="radio" name="risk-level" value="moderately aggressive"> Moderately Aggressive<br>
-                <input type="radio" name="risk-level" value="aggressive"> Aggressive<br>
+            <div class="risk-btn-container">
+                <button class="risk-btn" data-risk="conservative">Conservative</button>
+                <button class="risk-btn" data-risk="moderately conservative">Moderate</button>
+                <button class="risk-btn" data-risk="moderately aggressive">Aggressive</button>
+                <button class="risk-btn" data-risk="aggressive">Very Aggressive</button>
             </div>
 
+
             <button id="investment-btn">Generate Investment Growth</button>
+
+            <div id="investmentGraph" class="investment-graph-container"></div>
 
         </div>
         
