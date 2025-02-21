@@ -95,16 +95,27 @@ def get_investment_data():
 
 @app.route("/api/plot/investment", methods=["POST"])
 def generate_investment_plot():
-    """Creates and saves an investment growth plot."""
+    """Creates and saves an investment growth plot and returns portfolio weights."""
     data = request.json
     principal = float(data["principal"])
     aggro = data["aggro"]
 
-    subprocess.run(["python", "main.py", str(principal), str(aggro)], check=True)
+    # ✅ First, generate the investment growth plot (same as before)
+    try:
+        subprocess.run(["python", "main.py", str(principal), str(aggro)], check=True)
+    except subprocess.CalledProcessError as e:
+        return jsonify({"message": "Graph generation failed", "error": str(e)}), 500
+
+    # ✅ Get portfolio weights
+    from Portfolio_Building.get_weights import get_weights_given_aggressiveness
+    weights, _ = get_weights_given_aggressiveness(aggro)
+
     return jsonify({
-            "message": "Investment growth plot saved.",
-            "graph_url": "/static/investment_growth.html"
+        "message": "Investment growth plot saved.",
+        "graph_url": "/static/investment_growth.html",
+        "weights": weights  # ✅ Send weights to frontend
     })
+
 
 # ✅ API Endpoint: Get Economic Data
 @app.route('/api/economic', methods=['GET'])

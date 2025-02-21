@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const investmentInput = document.getElementById("investment-input");
     const investmentBtn = document.getElementById("investment-btn");
     const investmentGraph = document.getElementById("investmentGraph");
+    const portfolioWeightsDiv = document.getElementById("portfolioWeights"); // ✅ Added Weights Div
     let selectedRisk = null;
 
     // ✅ Handle Risk Level Selection + Highlighting
@@ -93,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ✅ Generate Investment Growth Graph
+    // ✅ Generate Investment Growth Graph + Display Portfolio Weights
     investmentBtn.addEventListener("click", function () {
         const principal = investmentInput.value.trim();
 
@@ -113,16 +114,15 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             console.log("✅ API Response:", data);
 
-            if (data.graph_url) {
-                // ✅ Fix: Make sure the image URL is correctly used
-                investmentGraph.innerHTML = `
-                    <img src="${data.graph_url}?timestamp=${new Date().getTime()}" 
-                         alt="Investment Growth Graph"
-                         width="100%" 
-                         style="max-width: 800px; display: block; margin: auto; border-radius: 10px; margin-top: 20px;">
-                `;
-            } else {
-                alert("Error generating investment graph.");
+            // ✅ Display portfolio weights under the graph
+            if (data.weights) {
+                let weightHTML = `<h3 style="margin-top: 20px; color: white; text-align: center;">Portfolio Weights</h3>
+                                  <ul style="color: white; text-align: center; list-style: none; padding: 0;">`;
+                data.weights.forEach((weight, i) => {
+                    weightHTML += `<li>Company ${i + 1}: ${(weight * 100).toFixed(2)}%</li>`;
+                });
+                weightHTML += "</ul>";
+                portfolioWeightsDiv.innerHTML = weightHTML;
             }
         })
         .catch(error => console.error("❌ API Request Failed:", error));
