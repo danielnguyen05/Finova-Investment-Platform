@@ -114,15 +114,18 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             console.log("✅ API Response:", data);
 
-            // ✅ Display portfolio weights under the graph
+            // ✅ Hardcoded company names in correct order
+            const companyNames = ["NVDA", "KO", "LLY", "JPM", "NFLX"];
+
+            // ✅ Display portfolio weights with proper names
             if (data.weights) {
                 let weightHTML = `<h3 style="margin-top: 20px; color: white; text-align: center;">Portfolio Weights</h3>
                                   <ul style="color: white; text-align: center; list-style: none; padding: 0;">`;
                 data.weights.forEach((weight, i) => {
-                    weightHTML += `<li>Company ${i + 1}: ${(weight * 100).toFixed(2)}%</li>`;
+                    weightHTML += `<li>${companyNames[i]}: ${(weight * 100).toFixed(2)}%</li>`;
                 });
                 weightHTML += "</ul>";
-                portfolioWeightsDiv.innerHTML = weightHTML;
+                portfolioWeightsDiv.innerHTML = weightHTML
             }
         })
         .catch(error => console.error("❌ API Request Failed:", error));

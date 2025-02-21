@@ -10,46 +10,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-        }
 
-        .main-container {
-            flex: 1;
-        }
-
-        .contenedor-footer {
-            text-align: center;
-            padding: 15px 0;
-            width: 100%;
-        }
-
-        .contenedor-seccion p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .contenedor-seccion ul {
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-
-        ul {
-            list-style-type: disc;
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-        
-    </style>
 </head>
+
+<style>
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    line-height: 1.8;
+    padding: 0;
+    margin: 0;
+}
+</style>
 
 <body class="about-page">
     
@@ -68,22 +41,51 @@
     </header>
     
     <section class="main-container contenedor-seccion">
-        <h1>About FINOVA</h1>
-        <p>FINOVA is a personal finance platform created by Alice and Bob to showcase their expertise in finance and economics.</p>
-        <p>The platform offers several sophisticated features, including:</p>
+        <p>FINOVA is a personal finance platform designed to help users construct optimized investment portfolios using data-driven insights. Our portfolio-building system is rooted in <strong>Modern Portfolio Theory (MPT)</strong> and <strong>Linear Programming (LP)</strong>, allowing for the maximization of expected returns while managing risk effectively.</p>
+
+        <h2>How Portfolio Building Works</h2>
+        <p>Our portfolio construction follows <strong>Modern Portfolio Theory (MPT)</strong>, which emphasizes maximizing expected return for a given level of risk. Risk is measured using beta a metric that quantifies a stock’s volatility relative to the overall market. To optimize the risk-return balance, we employ <strong>Linear Programming</strong> to determine the best asset allocation that maximizes expected return while ensuring the portfolio’s beta remains below the user’s risk threshold.</p>
+
+        <h2>Optimization Process</h2>
+        <p>The optimization process consists of three main steps:</p>
         <ul>
-            <li> - Integration of the <strong>Alpha Vantage API</strong> for real-time and accurate stock market data.</li>
-            <li> - A built-in, fine-tuned chatbot powered by <strong>Ollama 3.2</strong> to answer finance and economics-related questions.</li>
-            <li> - An <strong>interactive investment growth plot</strong> that estimates portfolio value using finance principles and <strong>linear programming</strong> (CBC model).</li>
+            <li><strong>Defining Constraints</strong> – The total portfolio weights must sum to 100%, and the total portfolio beta must stay below the threshold defined by the selected risk preference.</li>
+            <li><strong>Objective Function</strong> – The system maximizes expected return, calculated as the weighted sum of the expected returns of the selected stocks.</li>
+            <li><strong>Risk Calibration</strong> – The LP model adjusts stock allocations dynamically, ensuring that high-beta stocks are balanced by more stable assets to maintain the desired risk level.</li>
         </ul>
-        <p>FINOVA's frontend is built using <strong>HTML, CSS, and JavaScript</strong>, while the backend leverages <strong>Python (Flask, pandas)</strong>.</p>
+        <p>This method ensures efficient capital allocation optimizing the risk-return tradeoff by systematically distributing capital among stocks in a way that preserves stability while seeking growth<p>
+
+        <h2>Company Selection & Diversification</h2>
+        <p>Currently, the portfolios are built from a preselected set of stocks chosen based on liquidity, market capitalization, and sector representation. This approach ensures that the optimization process remains efficient while avoiding computational complexity.</p>
+        <p>Sector diversification is a critical component of portfolio stability. Investing across multiple industries helps mitigate risk by reducing exposure to sector-specific downturns. A well-diversified portfolio balances exposure across technology, healthcare, finance, and consumer goods, ensuring that external economic shocks do not significantly impact overall performance.</p>
+
+        <p>Our current selected stocks include:</p>
+        <ul>
+            <li><strong>NVDA (Nvidia)</strong> - Technology</li>
+            <li><strong>KO (Coca-Cola)</strong> - Consumer Goods</li>
+            <li><strong>LLY (Eli Lilly)</strong> - Healthcare</li>
+            <li><strong>JPM (JPMorgan Chase)</strong> - Financials</li>
+            <li><strong>NFLX (Netflix)</strong> - Media/Entertainment</li>
+        </ul>
+
+        <h2>Future Enhancements</h2>
+        <p>Currently, our model uses a predefined selection of companies, but we are developing a customizable portfolio-building system where users can select their own stock while still benefiting from our LP-based optimization framework.</p>
+        
+        <p>The planned process will include:</p>
+        <ol>
+            <li><strong>User Stock Selection</strong> – Users will choose stocks from a broader universe based on their investment preferences.</li>
+            <li><strong>Risk & Return Analysis</strong> – The system will analyze stock beta, expected return, and covariance to assess their suitability.</li>
+            <li><strong>Optimization Algorithm Execution</strong> – The LP solver will calculate the best weight allocations for the selected stocks, ensuring maximum returns within the user's risk tolerance.</li>
+            <li><strong>Real-Time Visualization</strong> – A dynamic UI will provide instant feedback on how changes in stock selection affect risk-return profiles.</li>
+        </ol>
+
+        <p>By integrating user-defined stock choices while maintaining the mathematical rigor of our LP model, this future update will enhance portfolio flexibility, allowing for more personalized investment strategies.</p>
     </section>
     
     <footer class="contenedor-footer">
-        <p>Page by <strong>Alice, Bob</strong></p>
+        <p>Page by <strong>Daniel Nguyen, Zenan Chen</strong></p>
         <p>Disclaimer: FINOVA is not an accredited financial institution; information provided should not be interpreted as financial advice.</p>
     </footer>
-    
     <script src="{{ url_for('static', filename='particles.js') }}"></script>
     <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
