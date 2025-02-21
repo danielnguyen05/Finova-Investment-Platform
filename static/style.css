@@ -219,7 +219,12 @@ blockquote i {
 }
 
 .boton-subscripcion button {
+    z-index: 100000000;
 	margin: 0;
+}
+
+.boton-play {
+    cursor: pointer; 
 }
 
 .contenedor-footer p {
